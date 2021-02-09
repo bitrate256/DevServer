@@ -14,6 +14,7 @@ public class AssetTypeLogic implements AssetTypeService {
 
     @Override
     public void register(AssetType assetType) {
+
         assetTypeApi.save(assetType);
     }
 

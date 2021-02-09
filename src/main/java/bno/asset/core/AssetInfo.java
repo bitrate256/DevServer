@@ -8,24 +8,24 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity(name = "Assets")
-public class AssetsInfo {
+@Entity(name = "Asset")
+public class AssetInfo {
 
     @Id
-    private String assetsNo;
+    private String assetNo;
     @OneToOne
     @JoinColumn(name = "asset_type_code", nullable = false)
-    private AssetType assetsTypeCode;
+    private AssetType assetTypeCode;
     @Column(nullable = false)
     private String user_name;
     @Column(nullable = false)
-    private String assetsModelName;
+    private String assetModelName;
     @Column(unique = true, nullable = false)
-    private String assetsSerialNo;
+    private String assetSerialNo;
     @Column(nullable = false)
     private LocalDateTime useStartDate;
     @Column(nullable = false)
-    private String assetsStat;
+    private String assetStat;
     @Column(nullable = false)
     private String assetPjtLoc;
     @Column(nullable = false)
@@ -33,17 +33,17 @@ public class AssetsInfo {
     @Column(columnDefinition = "date default now()")
     private LocalDateTime regDate;
 
-    public AssetsInfo() {
+    public AssetInfo() {
 
     }
 
-    public AssetsInfo(AssetType assetsTypeCode, String user_name, String assetsModelName, String assetsSerialNo, LocalDateTime useStartDate, String assetsStat, String assetPjtLoc, String etc) {
-        this.assetsTypeCode = assetsTypeCode;
+    public AssetInfo(AssetType assetTypeCode, String user_name, String assetModelName, String assetSerialNo, LocalDateTime useStartDate, String assetStat, String assetPjtLoc, String etc) {
+        this.assetTypeCode = assetTypeCode;
         this.user_name = user_name;
-        this.assetsModelName = assetsModelName;
-        this.assetsSerialNo = assetsSerialNo;
+        this.assetModelName = assetModelName;
+        this.assetSerialNo = assetSerialNo;
         this.useStartDate = useStartDate;
-        this.assetsStat = assetsStat;
+        this.assetStat = assetStat;
         this.assetPjtLoc = assetPjtLoc;
         this.etc = etc;
     }

@@ -1,7 +1,7 @@
 package bno.asset.controller;
 
-import bno.asset.core.AssetsInfo;
-import bno.asset.service.AssetsInfoService;
+import bno.asset.core.AssetInfo;
+import bno.asset.service.AssetInfoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AssetsController {
     //
     @Autowired
-    private AssetsInfoService assetsInfoService;
+    private AssetInfoService assetInfoService;
 
     @PostMapping("/")
     public String home() {
@@ -20,9 +20,9 @@ public class AssetsController {
     }
 
     @PostMapping("/Create")
-    public String createAssetsInfo(AssetsInfo assetsInfo) {
+    public String createAssetsInfo(AssetInfo assetInfo) {
         //
-        assetsInfoService.register(assetsInfo);
+        assetInfoService.register(assetInfo);
 
         return "1";
     }
