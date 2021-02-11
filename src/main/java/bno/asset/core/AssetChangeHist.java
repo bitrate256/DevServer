@@ -16,10 +16,10 @@ public class AssetChangeHist {
     private int seq;
     @OneToOne
     @JoinColumn(name = "asset_no", nullable = false)
-    private AssetInfo assetNo;
+    private AssetInfo asset_no;
     @Column(nullable = false)
-    private LocalDateTime chngDate;
-    private String chngRsn;
+    private LocalDateTime chng_date;
+    private String chng_rsn;
 
     public AssetChangeHist() {
 

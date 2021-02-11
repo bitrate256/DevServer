@@ -16,18 +16,18 @@ public class AssetType {
     @Id
     private String no;
     @Column(unique = true, nullable = false)
-    private String assetTypeCode;
+    private String asset_type_code;
     @Column(nullable = false)
-    private String assetTypeName;
+    private String asset_type_name;
     @Column(columnDefinition = "date default now()")
-    private LocalDateTime regDate;
+    private LocalDateTime reg_date;
 
     public AssetType() {
 
     }
 
-    public AssetType(String assetTypeCode, String assetTypeName) {
-        this.assetTypeCode = assetTypeCode;
-        this.assetTypeName = assetTypeName;
+    public AssetType(String asset_type_code, String asset_type_name) {
+        this.asset_type_code = asset_type_code;
+        this.asset_type_name = asset_type_name;
     }
 }
