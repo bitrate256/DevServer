@@ -24,6 +24,6 @@ public class AssetsController {
         //
         assetInfoService.register(assetInfo);
 
-        return "1";
+        return "AssetsController";
     }
 }
