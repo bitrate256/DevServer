@@ -11,5 +11,5 @@ import javax.transaction.Transactional;
 @EnableJpaRepositories
 @Transactional
 public interface AssetTypeApi extends JpaRepository<AssetType, String> {
-    AssetType findByAssetTypeCode(AssetType assetType);
+//    AssetType findByAssetTypeCode(AssetType assetType);
 }

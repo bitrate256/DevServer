@@ -19,13 +19,12 @@ public interface AssetInfoService {
     List<AssetInfo> findAll();
 
     // READ
-    AssetInfo findById(int asset_no);
-    // public AssetInfo findByAssetNo(AssetInfo assetInfo);
+    AssetInfo findByAssetNo(int assetNo);
 
     // UPDATE
-    void updateById(int asset_no, AssetInfo assetInfo);
+    void updateById(int assetNo, AssetInfo assetInfo);
 
     // DELETE
-    void deleteById(int asset_no);
+    void deleteByAssetNo(int assetNo);
 
 }

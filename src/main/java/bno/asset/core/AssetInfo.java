@@ -6,52 +6,55 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-// @Getter
-// @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "asset")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+// @AllArgsConstructor
+// @NoArgsConstructor
 public class AssetInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String asset_no;
+//  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private String assetNo;
     @OneToOne
-    @JoinColumn(name = "asset_type_code", nullable = false)
-    private AssetType asset_type_code;
+    @JoinColumn(name = "assetTypeCode", nullable = false)
+    private AssetType assetTypeCode;
     @Column(nullable = false)
-    private String user_name;
+    private String userName;
     @Column(nullable = false)
-    private String asset_model_name;
+    private String assetModelName;
     @Column(unique = true, nullable = false)
-    private String asset_serial_no;
+    private String assetSerialNo;
     @Column(nullable = false)
-    private LocalDateTime use_start_date;
+    private LocalDateTime useStartDate;
     @Column(nullable = false)
-    private String asset_stat;
+    private String assetStat;
     @Column(nullable = false)
-    private String asset_pjt_loc;
+    private String assetPjtLoc;
     @Column(nullable = false)
     private String etc;
     @Column(columnDefinition = "date default now()")
-    private LocalDateTime reg_date;
+    private LocalDateTime regDate;
 
+    public AssetInfo() {
 
-    /*
-    public AssetInfo(AssetType asset_type_code, String user_name, String asset_model_name,
-                     String asset_serial_no, LocalDateTime use_start_date, String asset_stat,
-                     String asset_pjt_loc, String etc) {
-        this.asset_type_code = asset_type_code;
-        this.user_name = user_name;
-        this.asset_model_name = asset_model_name;
-        this.asset_serial_no = asset_serial_no;
-        this.use_start_date = use_start_date;
-        this.asset_stat = asset_stat;
-        this.asset_pjt_loc = asset_pjt_loc;
+    }
+
+    public AssetInfo(AssetType assetTypeCode, String userName, String assetModelName,
+                     String assetSerialNo, LocalDateTime useStartDate, String assetStat,
+                     String assetPjtLoc, String etc) {
+        this.assetTypeCode = assetTypeCode;
+        this.userName = userName;
+        this.assetModelName = assetModelName;
+        this.assetSerialNo = assetSerialNo;
+        this.useStartDate = useStartDate;
+        this.assetStat = assetStat;
+        this.assetPjtLoc = assetPjtLoc;
         this.etc = etc;
     }
-    */
+
 }

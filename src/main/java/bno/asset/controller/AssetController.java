@@ -52,30 +52,25 @@ public class AssetController {
     }
 
     // READ 1안 (AssetApi 에서 Optional<findById> 사용)
-    @GetMapping(value = "/asset/{asset_no}")
-    public ResponseEntity<AssetInfo> getAssetInfo(@PathVariable("asset_no") int asset_no) {
-        return new ResponseEntity<AssetInfo>(assetInfoService.findById(asset_no),HttpStatus.OK);
+    @GetMapping(value = "/asset/{assetNo}")
+    public ResponseEntity<AssetInfo> getAssetInfo(@PathVariable("assetNo") int assetNo) {
+        return new ResponseEntity<AssetInfo>(assetInfoService.findByAssetNo(assetNo),HttpStatus.OK);
     }
     // READ 2안
     // 인수인계 로직을 따른 controller 는?
-    /*
-    public AssetInfo findByAssetNo (@PathVariable String asset_no) {
-        return AssetInfoService.findByAssetNo(asset_no);
-    }
-    */
 
     // UPDATE
-    @PutMapping(value = "/asset/{asset_no}")
-    public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("asset_no") int asset_no,
+    @PutMapping(value = "/asset/{assetNo}")
+    public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("assetNo") int assetNo,
                                                      @RequestBody AssetInfo assetInfo) {
-        assetInfoService.updateById(asset_no, assetInfo);
+        assetInfoService.updateById(assetNo, assetInfo);
         return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
     }
 
     // DELETE
-    @DeleteMapping(value = "/asset/{asset_no}")
-    public ResponseEntity<Void> deleteAssetInfo(@PathVariable("asset_no") int asset_no) {
-        assetInfoService.deleteById(asset_no);
+    @DeleteMapping(value = "/asset/{assetNo}")
+    public ResponseEntity<Void> deleteAssetInfo(@PathVariable("assetNo") int assetNo) {
+        assetInfoService.deleteByAssetNo(assetNo);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 }
