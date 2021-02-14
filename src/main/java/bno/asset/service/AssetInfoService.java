@@ -6,18 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 // 비즈니스 로직을 구현하는 클래스
 @Service // 서비스 클래스임을 나타냄
 public interface AssetInfoService {
 
-    @Autowired // 스프링부트가 자동으로 객체를 주입함.
-    AssetApi assetApi;
+    // CREATE
+    AssetInfo save(AssetInfo assetInfo);
 
-    public List<AssetInfo> findAll() {
-        List<AssetInfo> list = assetApi.findAll(); // findAll() 메소드로 테이블의 레코드 리스트를 가져옴
-        return list;
-    }
+    // LIST
+    List<AssetInfo> findAll();
 
-    public void register(AssetInfo assetInfo);
+    // READ
+    AssetInfo findById(int asset_no);
+    // public AssetInfo findByAssetNo(AssetInfo assetInfo);
+
+    // UPDATE
+    void updateById(int asset_no, AssetInfo assetInfo);
+
+    // DELETE
+    void deleteById(int asset_no);
+
 }

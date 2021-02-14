@@ -1,17 +1,23 @@
 package bno.asset.core;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@Entity(name = "Asset")
-public class AssetInfo {
+// @Getter
+// @Setter
+@Entity
+@Table(name = "asset")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AssetInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String asset_no;
     @OneToOne
     @JoinColumn(name = "asset_type_code", nullable = false)
@@ -33,10 +39,8 @@ public class AssetInfo {
     @Column(columnDefinition = "date default now()")
     private LocalDateTime reg_date;
 
-    public AssetInfo() {
 
-    }
-
+    /*
     public AssetInfo(AssetType asset_type_code, String user_name, String asset_model_name,
                      String asset_serial_no, LocalDateTime use_start_date, String asset_stat,
                      String asset_pjt_loc, String etc) {
@@ -49,4 +53,5 @@ public class AssetInfo {
         this.asset_pjt_loc = asset_pjt_loc;
         this.etc = etc;
     }
+    */
 }

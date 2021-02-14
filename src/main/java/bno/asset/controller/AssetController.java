@@ -1,15 +1,18 @@
 package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
+import bno.asset.routers.AssetApi;
 import bno.asset.service.AssetInfoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -25,27 +28,54 @@ public class AssetController {
         return "";
     }
 
-    // LIST
-    @GetMapping("/asset")
-    public String ModelAndView assetList() {
-        List<AssetInfo> list = assetInfoService.findAll()(); // 서비스에서 요청에 해당하는 처리를 함.
-        ModelAndView nextView = new ModelAndView("asset/list"); // ModelAndView 객체를 응답페이지의 위치를 지정해 생성함.
-        nextView.addObject("assetList", list); // 서비스에서 받아온 데이터 List를 ModelAndView 객체에 넣음.
-        return nextView; // ModelAndView 객체를 리턴함
-    }
-
     // CREATE
-    @PostMapping("/Create") // 클라이언트 요청 url 이 Create 이며 Post 방식일 때 이 메소드에서 요청
-    public String createAssetInfo(AssetInfo assetInfo) {
-        //
-        assetInfoService.register(assetInfo);
-
-        return "AssetsController";
+    @PostMapping
+    public ResponseEntity<AssetInfo> save(@RequestBody AssetInfo assetInfo) {
+        return new ResponseEntity<AssetInfo>(assetInfoService.save(assetInfo), HttpStatus.OK);
     }
 
-    // READ
+    // LIST
+    @PostMapping(value = "/asset")
+    public ResponseEntity<List<AssetInfo>> getAllasset() {
+        List<AssetInfo> assetInfos = assetInfoService.findAll();
+        return new ResponseEntity<List<AssetInfo>>(assetInfos, HttpStatus.OK);
+    }
+    // LIST 2안 (service 없음)
+    @GetMapping("/asset")
+    public List<AssetInfo> listAllAsset() {
+        List<AssetInfo> list = new ArrayList<>();
+        Iterable<AssetInfo> iterable = assetInfoService.findAll();
+        for (AssetInfo assetInfo : iterable) {
+            list.add(assetInfo);
+        }
+        return list;
+    }
+
+    // READ 1안 (AssetApi 에서 Optional<findById> 사용)
+    @GetMapping(value = "/asset/{asset_no}")
+    public ResponseEntity<AssetInfo> getAssetInfo(@PathVariable("asset_no") int asset_no) {
+        return new ResponseEntity<AssetInfo>(assetInfoService.findById(asset_no),HttpStatus.OK);
+    }
+    // READ 2안
+    // 인수인계 로직을 따른 controller 는?
+    /*
+    public AssetInfo findByAssetNo (@PathVariable String asset_no) {
+        return AssetInfoService.findByAssetNo(asset_no);
+    }
+    */
 
     // UPDATE
+    @PutMapping(value = "/asset/{asset_no}")
+    public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("asset_no") int asset_no,
+                                                     @RequestBody AssetInfo assetInfo) {
+        assetInfoService.updateById(asset_no, assetInfo);
+        return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
+    }
 
     // DELETE
+    @DeleteMapping(value = "/asset/{asset_no}")
+    public ResponseEntity<Void> deleteAssetInfo(@PathVariable("asset_no") int asset_no) {
+        assetInfoService.deleteById(asset_no);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
 }
