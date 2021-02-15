@@ -41,15 +41,15 @@ public class AssetController {
         return new ResponseEntity<List<AssetInfo>>(assetInfos, HttpStatus.OK);
     }
     // LIST 2안 (service 없음)
-    @GetMapping("/asset")
-    public List<AssetInfo> listAllAsset() {
-        List<AssetInfo> list = new ArrayList<>();
-        Iterable<AssetInfo> iterable = assetInfoService.findAll();
-        for (AssetInfo assetInfo : iterable) {
-            list.add(assetInfo);
-        }
-        return list;
-    }
+//    @GetMapping("/asset")
+//    public List<AssetInfo> listAllAsset() {
+//        List<AssetInfo> list = new ArrayList<>();
+//        Iterable<AssetInfo> iterable = assetInfoService.findAll();
+//        for (AssetInfo assetInfo : iterable) {
+//            list.add(assetInfo);
+//        }
+//        return list;
+//    }
 
     // READ
     // Optional<findById> 사용하지 않음

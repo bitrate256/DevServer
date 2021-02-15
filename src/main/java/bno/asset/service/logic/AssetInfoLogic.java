@@ -33,7 +33,7 @@ public class AssetInfoLogic implements AssetInfoService {
         return assetInfos;
     }
 
-    // READ 1안
+    // READ
     @Override
     public AssetInfo findByAssetNo(String assetNo) {
         return assetApi.findById(assetNo).orElseThrow(() ->
