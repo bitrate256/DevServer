@@ -1,6 +1,8 @@
 package bno.asset.service.logic;
 
 import bno.asset.core.AssetInfo;
+import bno.asset.core.AssetType;
+import bno.asset.routers.AssetTypeApi;
 import bno.asset.util.AssetCodeFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetApi;
@@ -16,15 +18,25 @@ public class AssetInfoLogic implements AssetInfoService {
     @Autowired
     private AssetApi assetApi;
 
+    @Autowired
+    private AssetTypeApi assetTypeApi;
+
     // CREATE
     @Override
     public AssetInfo save(AssetInfo assetInfo) {
         AssetCodeFormat format = new AssetCodeFormat();
+        String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
 
             //
             String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
             assetInfo.setAssetNo(pk);
-            assetApi.save(assetInfo);
+            AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
+            if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
+
+                assetInfo.setAssetTypeCode(assetType);
+                assetApi.save(assetInfo);
+            }
+
 
             return assetInfo;
     }

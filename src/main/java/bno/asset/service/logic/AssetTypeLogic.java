@@ -15,7 +15,7 @@ public class AssetTypeLogic implements AssetTypeService {
     @Autowired
     private AssetTypeApi assetTypeApi;
 
-    // 인수인계 예제 CREATE
+    // CREATE
     @Override
     public void register(AssetType assetType) {
 
@@ -23,11 +23,11 @@ public class AssetTypeLogic implements AssetTypeService {
         assetTypeApi.save(assetType);
     }
 
-    // 인수인계 예제 READ
+    // READ
     @Override
     public AssetType findByAssetTypeCode(String assetType) {
-        return assetTypeApi.findById(assetType).orElseThrow(() ->
-                        new ResourceNotFoundException("", "", assetType));
+
+        return assetTypeApi.findByAssetTypeCode(assetType);
     }
 
 }
