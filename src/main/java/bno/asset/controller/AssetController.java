@@ -29,8 +29,11 @@ public class AssetController {
     }
 
     // CREATE
-    @PostMapping
-    public ResponseEntity<AssetInfo> save(@RequestBody AssetInfo assetInfo) {
+    @PostMapping(value = "/create")
+    public ResponseEntity<AssetInfo> create(@RequestBody AssetInfo assetInfo) {
+
+        System.out.println("$$$$$$$$$$$ ========    "+assetInfo.toString());
+
         return new ResponseEntity<AssetInfo>(assetInfoService.save(assetInfo), HttpStatus.OK);
     }
 

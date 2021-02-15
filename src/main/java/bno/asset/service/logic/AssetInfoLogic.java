@@ -1,16 +1,14 @@
 package bno.asset.service.logic;
 
 import bno.asset.core.AssetInfo;
-import bno.asset.exception.ResourceNotFoundException;
-import bno.asset.routers.AssetTypeApi;
+import bno.asset.util.AssetCodeFormat;
+import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetApi;
 import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AssetInfoLogic implements AssetInfoService {
@@ -21,16 +19,20 @@ public class AssetInfoLogic implements AssetInfoService {
     // CREATE
     @Override
     public AssetInfo save(AssetInfo assetInfo) {
-        assetApi.save(assetInfo);
-        return assetInfo;
+        AssetCodeFormat format = new AssetCodeFormat();
+
+            //
+            String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
+            assetInfo.setAssetNo(pk);
+            assetApi.save(assetInfo);
+
+            return assetInfo;
     }
 
     // LIST
     @Override
     public List<AssetInfo> findAll() {
-        List<AssetInfo> assetInfos = new ArrayList<>();
-        assetApi.findAll().forEach(a->assetInfos.add(a));
-        return assetInfos;
+        return assetApi.findAll();
     }
 
     // READ

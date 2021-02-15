@@ -1,6 +1,7 @@
 package bno.asset.core;
 
 import lombok.*;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,15 +10,16 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "asset")
+@Table(name = "AssetInfo")
 @Data
 // @AllArgsConstructor
 // @NoArgsConstructor
 public class AssetInfo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
-//  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private String assetNo;
     @OneToOne
