@@ -18,9 +18,7 @@ public interface AssetApi extends JpaRepository<AssetInfo, String> {
     // Optional<ID Primary key>
     // T는 엔티티의 타입클래스, ID는 PK값의 타입이다.
 
-    // READ 1안
-    Optional<AssetInfo> findByAssetNo(int assetNo);
-    // READ 2안
-
-    Optional<AssetInfo> deleteByAssetNo(int assetNo);
+    // Optional 삭제
+    // Optional<AssetInfo> findByAssetNo(int assetNo);
+    // Optional<AssetInfo> deleteByAssetNo(int assetNo);
 }

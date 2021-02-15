@@ -35,17 +35,16 @@ public class AssetInfoLogic implements AssetInfoService {
 
     // READ 1안
     @Override
-    public AssetInfo findByAssetNo(int assetNo) {
-        AssetInfo assetInfo = assetApi.findByAssetNo(assetNo).orElseThrow(()->
-                new ResourceNotFoundException("AssetInfo","assetNo",assetNo));
-        return assetInfo;
+    public AssetInfo findByAssetNo(String assetNo) {
+        return assetApi.findById(assetNo).orElseThrow(() ->
+                new ResourceNotFoundException("", "", assetNo));
     }
 
     // UPDATE
     @Override
-    public void updateById(int assetNo, AssetInfo assetInfo) {
-        AssetInfo a = assetApi.findByAssetNo(assetNo).orElseThrow(()->
-                new ResourceNotFoundException("AssetInfo","assetNo",assetNo));
+    public void updateById(String assetNo, AssetInfo assetInfo) {
+        AssetInfo a = assetApi.findById(assetNo).orElseThrow(()->
+                new ResourceNotFoundException("","",assetNo));
         a.setAssetTypeCode(assetInfo.getAssetTypeCode());
         a.setUserName(assetInfo.getUserName());
         a.setAssetModelName(assetInfo.getAssetModelName());
@@ -60,8 +59,8 @@ public class AssetInfoLogic implements AssetInfoService {
 
     // DELETE
     @Override
-    public void deleteByAssetNo(int assetNo) {
-        assetApi.deleteByAssetNo(assetNo);
+    public void deleteByAssetNo(String assetNo) {
+        assetApi.findById(assetNo);
     }
 
 }

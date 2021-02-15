@@ -51,17 +51,17 @@ public class AssetController {
         return list;
     }
 
-    // READ 1안 (AssetApi 에서 Optional<findById> 사용)
+    // READ
+    // Optional<findById> 사용하지 않음
+    // ID값 타입 String 으로 변경
     @GetMapping(value = "/asset/{assetNo}")
-    public ResponseEntity<AssetInfo> getAssetInfo(@PathVariable("assetNo") int assetNo) {
+    public ResponseEntity<AssetInfo> getAssetInfo(@PathVariable("assetNo") String assetNo) {
         return new ResponseEntity<AssetInfo>(assetInfoService.findByAssetNo(assetNo),HttpStatus.OK);
     }
-    // READ 2안
-    // 인수인계 로직을 따른 controller 는?
 
     // UPDATE
     @PutMapping(value = "/asset/{assetNo}")
-    public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("assetNo") int assetNo,
+    public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("assetNo") String assetNo,
                                                      @RequestBody AssetInfo assetInfo) {
         assetInfoService.updateById(assetNo, assetInfo);
         return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class AssetController {
 
     // DELETE
     @DeleteMapping(value = "/asset/{assetNo}")
-    public ResponseEntity<Void> deleteAssetInfo(@PathVariable("assetNo") int assetNo) {
+    public ResponseEntity<Void> deleteAssetInfo(@PathVariable("assetNo") String assetNo) {
         assetInfoService.deleteByAssetNo(assetNo);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
