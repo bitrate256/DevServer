@@ -62,7 +62,7 @@ public class AssetInfoLogic implements AssetInfoService {
     // DELETE
     @Override
     public void deleteByAssetNo(String assetNo) {
-        assetApi.findById(assetNo);
+        assetApi.deleteById(assetNo);
     }
 
 }

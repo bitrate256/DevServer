@@ -26,8 +26,7 @@ public class AssetTypeLogic implements AssetTypeService {
     // 인수인계 예제 READ
     @Override
     public AssetType findByAssetTypeCode(String assetType) {
-        return assetTypeApi.findById(assetType)
-                .orElseThrow(() ->
+        return assetTypeApi.findById(assetType).orElseThrow(() ->
                         new ResourceNotFoundException("", "", assetType));
     }
 
