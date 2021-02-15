@@ -15,11 +15,11 @@ public class AssetChangeHist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int seq;
     @OneToOne
-    @JoinColumn(name = "asset_no", nullable = false)
-    private AssetInfo asset_no;
+    @JoinColumn(name = "assetNo", nullable = false)
+    private AssetInfo assetNo;
     @Column(nullable = false)
-    private LocalDateTime chng_date;
-    private String chng_rsn;
+    private LocalDateTime chngDate;
+    private String chngRsn;
 
     public AssetChangeHist() {
 

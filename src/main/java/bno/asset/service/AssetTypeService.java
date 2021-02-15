@@ -4,7 +4,7 @@ import bno.asset.core.AssetType;
 
 public interface AssetTypeService {
 
-//    public void register(AssetType assetType);
+    void register(AssetType assetType);
 
-//    public AssetType findByAssetTypeCode(AssetType assetType);
+    AssetType findByAssetTypeCode(String assetType);
 }
