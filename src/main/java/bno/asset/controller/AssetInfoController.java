@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 // Controller 클래스
 // 클라이언트로 부터 요청을 받아 해당 처리를 한 후 요청의 응답을 클라이언트에 보냄.
-public class AssetController {
+public class AssetInfoController {
     //
     @Autowired
     private AssetInfoService assetInfoService;

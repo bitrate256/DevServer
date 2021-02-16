@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 @EnableJpaRepositories
 @Transactional
-public interface AssetApi extends JpaRepository<AssetInfo, String> {
+public interface AssetInfoApi extends JpaRepository<AssetInfo, String> {
     // Optional<ID Primary key>
     // T는 엔티티의 타입클래스, ID는 PK값의 타입이다.
 

@@ -5,7 +5,7 @@ import bno.asset.core.AssetType;
 import bno.asset.routers.AssetTypeApi;
 import bno.asset.util.AssetCodeFormat;
 import bno.asset.util.ResourceNotFoundException;
-import bno.asset.routers.AssetApi;
+import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
 public class AssetInfoLogic implements AssetInfoService {
 
     @Autowired
-    private AssetApi assetApi;
+    private AssetInfoApi assetInfoApi;
 
     @Autowired
     private AssetTypeApi assetTypeApi;
@@ -30,14 +30,15 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
 
 
-            String pk = format.toAssetCodeFormat(
-                    format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
+            String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
             assetInfo.setAssetNo(pk);
+            System.out.println("pk: " + pk);
             AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
+            System.out.println("assetTypeCode: " + assetTypeCode);
             if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
 
                 assetInfo.setAssetTypeCode(assetType);
-                assetApi.save(assetInfo);
+                assetInfoApi.save(assetInfo);
             }
             return assetInfo;
     }
@@ -45,20 +46,20 @@ public class AssetInfoLogic implements AssetInfoService {
     // LIST
     @Override
     public List<AssetInfo> findAll() {
-        return assetApi.findAll();
+        return assetInfoApi.findAll();
     }
 
     // READ
     @Override
     public AssetInfo findByAssetNo(String assetNo) {
-        return assetApi.findById(assetNo).orElseThrow(() ->
+        return assetInfoApi.findById(assetNo).orElseThrow(() ->
                 new ResourceNotFoundException("", "", assetNo));
     }
 
     // UPDATE
     @Override
     public void updateById(String assetNo, AssetInfo assetInfo) {
-        AssetInfo a = assetApi.findById(assetNo).orElseThrow(()->
+        AssetInfo a = assetInfoApi.findById(assetNo).orElseThrow(()->
                 new ResourceNotFoundException("","",assetNo));
         a.setAssetTypeCode(assetInfo.getAssetTypeCode());
         a.setUserName(assetInfo.getUserName());
@@ -69,13 +70,13 @@ public class AssetInfoLogic implements AssetInfoService {
         a.setAssetPjtLoc(assetInfo.getAssetPjtLoc());
         a.setEtc(assetInfo.getEtc());
 
-        assetApi.save(assetInfo);
+        assetInfoApi.save(assetInfo);
     }
 
     // DELETE
     @Override
     public void deleteByAssetNo(String assetNo) {
-        assetApi.deleteById(assetNo);
+        assetInfoApi.deleteById(assetNo);
     }
 
 }
