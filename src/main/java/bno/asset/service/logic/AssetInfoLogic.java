@@ -27,17 +27,17 @@ public class AssetInfoLogic implements AssetInfoService {
         AssetCodeFormat format = new AssetCodeFormat();
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
 
-            //
-            String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
-            assetInfo.setAssetNo(pk);
+
+//            String pk = format.toAssetCodeFormat(
+//                    format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
+//            assetInfo.setAssetNo(pk);
             AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
             if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
 
                 assetInfo.setAssetTypeCode(assetType);
                 assetApi.save(assetInfo);
             }
-
-
+//            assetApi.save(assetInfo);
             return assetInfo;
     }
 
