@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 // 비즈니스 로직을 구현하는 클래스
-// 서비스 클래스임을 나타냄
+// 서비스 클래스 상속
 @Service
 public class AssetInfoLogic implements AssetInfoService {
 
