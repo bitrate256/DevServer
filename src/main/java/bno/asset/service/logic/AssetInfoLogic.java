@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// 비즈니스 로직을 구현하는 클래스
+// 서비스 클래스임을 나타냄
 @Service
 public class AssetInfoLogic implements AssetInfoService {
 
@@ -28,16 +30,15 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
 
 
-//            String pk = format.toAssetCodeFormat(
-//                    format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
-//            assetInfo.setAssetNo(pk);
+            String pk = format.toAssetCodeFormat(
+                    format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
+            assetInfo.setAssetNo(pk);
             AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
             if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
 
                 assetInfo.setAssetTypeCode(assetType);
                 assetApi.save(assetInfo);
             }
-//            assetApi.save(assetInfo);
             return assetInfo;
     }
 

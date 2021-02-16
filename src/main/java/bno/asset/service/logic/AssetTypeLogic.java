@@ -3,12 +3,10 @@ package bno.asset.service.logic;
 import bno.asset.core.AssetType;
 import bno.asset.routers.AssetTypeApi;
 import bno.asset.service.AssetTypeService;
-import bno.asset.util.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
 @Service
 public class AssetTypeLogic implements AssetTypeService {
 
