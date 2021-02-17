@@ -7,11 +7,8 @@ import bno.asset.util.AssetCodeFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
 
@@ -30,15 +27,20 @@ public class AssetInfoLogic implements AssetInfoService {
     @Override
     public AssetInfo save(AssetInfo assetInfo) {
         AssetCodeFormat format = new AssetCodeFormat();
+//        int seq = format.getSeq();
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
         AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
         System.out.println(assetType);
-        // 사용 로직(시리얼번호 생성)
+
+        // 시리얼 번호 생성하는 로직
         if (assetInfo.getAssetNo() == null || assetInfo.getAssetNo().length() == 0) {
             String bno = "BNO_";
-            String middleNumber = String.format("%04d",format.getSeq());
+            String middleNumber = String.format("%04d", format.autoIncrement());
 
-            String pk = bno+middleNumber+"_"+assetTypeCode;
+            // 접두어(BNO)_시퀀스번호_자산타입코드
+            // BNO      _0001   _T
+            // BNO_0001_T
+            String pk = bno + middleNumber + "_" + assetTypeCode;
 
             System.out.println(pk);
 
@@ -46,25 +48,9 @@ public class AssetInfoLogic implements AssetInfoService {
             assetInfo.setAssetTypeCode(assetType);
 
             return assetInfoApi.save(assetInfo);
-        }
-        else {
+        } else {
             throw new RuntimeException();
         }
-
-        //원본
-//        ObjectMapper objectMapper = new ObjectMapper();
-//
-//
-//        String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
-//        assetInfo.setAssetNo(pk);
-//        System.out.println("pk: " + pk);
-//        AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
-//        System.out.println("assetTypeCode: " + assetTypeCode);
-//        if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
-//            assetInfo.setAssetTypeCode(assetType);
-//            assetInfoApi.save(assetInfo);
-//            }
-//        return assetInfo;
     }
 
     // LIST

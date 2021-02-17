@@ -42,6 +42,9 @@ public class AssetInfo implements Serializable {
     @Column(columnDefinition = "date default now()")
     private LocalDateTime regDate;
 
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private String assetSeq;
+
     public AssetInfo() {
 
     }
