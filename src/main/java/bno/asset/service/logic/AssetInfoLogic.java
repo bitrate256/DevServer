@@ -7,8 +7,11 @@ import bno.asset.util.AssetCodeFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
 
@@ -28,19 +31,40 @@ public class AssetInfoLogic implements AssetInfoService {
     public AssetInfo save(AssetInfo assetInfo) {
         AssetCodeFormat format = new AssetCodeFormat();
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
+        AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
+        System.out.println(assetType);
+        // 사용 로직(시리얼번호 생성)
+        if (assetInfo.getAssetNo() == null || assetInfo.getAssetNo().length() == 0) {
+            String bno = "BNO_";
+            String middleNumber = String.format("%04d",format.getSeq());
 
+            String pk = bno+middleNumber+"_"+assetTypeCode;
 
-            String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
+            System.out.println(pk);
+
             assetInfo.setAssetNo(pk);
-            System.out.println("pk: " + pk);
-            AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
-            System.out.println("assetTypeCode: " + assetTypeCode);
-            if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
+            assetInfo.setAssetTypeCode(assetType);
 
-                assetInfo.setAssetTypeCode(assetType);
-                assetInfoApi.save(assetInfo);
-            }
-            return assetInfo;
+            return assetInfoApi.save(assetInfo);
+        }
+        else {
+            throw new RuntimeException();
+        }
+
+        //원본
+//        ObjectMapper objectMapper = new ObjectMapper();
+//
+//
+//        String pk = format.toAssetCodeFormat(format.getSeq(), format.getFirstName(), assetInfo.getAssetTypeCode());
+//        assetInfo.setAssetNo(pk);
+//        System.out.println("pk: " + pk);
+//        AssetType assetType = assetTypeApi.findByAssetTypeCode(assetTypeCode);
+//        System.out.println("assetTypeCode: " + assetTypeCode);
+//        if (assetType.getAssetTypeCode().equals(assetTypeCode)) {
+//            assetInfo.setAssetTypeCode(assetType);
+//            assetInfoApi.save(assetInfo);
+//            }
+//        return assetInfo;
     }
 
     // LIST
