@@ -26,34 +26,23 @@ public class AssetInfoLogic implements AssetInfoService {
     // CREATE
     @Override
     public AssetInfo save(AssetInfo assetInfo) {
-        AssetCodeFormat format = new AssetCodeFormat();
-//        int seq = format.getSeq();
+
+        // id값 활용한 일련번호 생성 로직
+        // 타입코드 받아옴
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
         AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
-        System.out.println(assetType);
+        System.out.println("   assetType: "+ assetType);
+        // id값 받아옴
+        Long id = assetInfo.getId();
+        System.out.println("       getId: "+ id);
+        String middleNumber = String.format("%04d", id);
+        System.out.println("middleNumber: "+ middleNumber);
+        // assetNo 생성
+        String assetNoString = "BNO_" + middleNumber + "_" + assetTypeCode;
 
-        // 시리얼 번호 생성하는 로직
-        // 접두어(BNO)_시퀀스번호_자산타입코드
-        // BNO      _0001   _T
-        // BNO_0001_T
-        if (assetInfo.getAssetNo() == null || assetInfo.getAssetNo().length() == 0) {
-            // 접두어 BNO
-            String bno = "BNO_";
-            // 시퀀스 번호 생성 메소드 호출
-            String middleNumber = String.format("%04d", format.autoIncrement());
-
-            // 합쳐서 String pk 로 변환
-            String pk = bno + middleNumber + "_" + assetTypeCode;
-
-            System.out.println(pk);
-
-            assetInfo.setAssetNo(pk);
-            assetInfo.setAssetTypeCode(assetType);
-
-            return assetInfoApi.save(assetInfo);
-        } else {
-            throw new RuntimeException();
-        }
+        // 생성한 assetNoString를 assetInfo의 assetNo에 저장
+        assetInfo.setAssetNo(assetNoString);
+        return assetInfoApi.save(assetInfo);
     }
 
     // LIST

@@ -20,4 +20,5 @@ public interface AssetInfoApi extends JpaRepository<AssetInfo, String> {
     // Optional 삭제
     // Optional<AssetInfo> findByAssetNo(int assetNo);
     // Optional<AssetInfo> deleteByAssetNo(int assetNo);
+    AssetInfo findById(Long id);
 }
