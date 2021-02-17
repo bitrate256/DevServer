@@ -33,13 +33,16 @@ public class AssetInfoLogic implements AssetInfoService {
         System.out.println(assetType);
 
         // 시리얼 번호 생성하는 로직
+        // 접두어(BNO)_시퀀스번호_자산타입코드
+        // BNO      _0001   _T
+        // BNO_0001_T
         if (assetInfo.getAssetNo() == null || assetInfo.getAssetNo().length() == 0) {
+            // 접두어 BNO
             String bno = "BNO_";
+            // 시퀀스 번호 생성 메소드 호출
             String middleNumber = String.format("%04d", format.autoIncrement());
 
-            // 접두어(BNO)_시퀀스번호_자산타입코드
-            // BNO      _0001   _T
-            // BNO_0001_T
+            // 합쳐서 String pk 로 변환
             String pk = bno + middleNumber + "_" + assetTypeCode;
 
             System.out.println(pk);

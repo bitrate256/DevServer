@@ -17,19 +17,20 @@ public class AssetCodeFormat {
 
     }
 
-
-
+    // 시퀀스 번호 생성 메소드
     public String autoIncrement() {
-        //
+
         System.out.println("public String autoIncrement() {");
         AssetCodeFormat.seq = getSeq();
 
+        // 기존 시퀀스 없을 때
         if (seq == 0 || seq < 0) {
             seq = 1;
 
             System.out.println("조건 : if (seq == 0 || seq < 0) {");
             return String.format(ASSETNO_FORMAT, seq);
         }
+        // 기존 시퀀스 있을 때
         else if (seq > 0 && seq == getSeq())
 
         seq = seq++;
@@ -37,6 +38,8 @@ public class AssetCodeFormat {
         System.out.println("조건 : else");
         return String.format(ASSETNO_FORMAT, seq);
     }
+
+    // 기존 시퀀스 번호 감지
     public int getSeq() {
         System.out.println("public int getSeq() {");
         return seq;
