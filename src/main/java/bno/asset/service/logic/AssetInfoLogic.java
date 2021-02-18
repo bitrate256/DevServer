@@ -10,6 +10,7 @@ import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 // 비즈니스 로직을 구현하는 클래스
@@ -32,17 +33,22 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
         AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
         System.out.println("   assetType: "+ assetType);
-        // id값 받아옴
-        Long id = assetInfo.getId();
+        // seq 값 로드 메소드로부터 id값 취득
+        String id = this.selectSeq();
         System.out.println("       getId: "+ id);
-        String middleNumber = String.format("%04d", id);
-        System.out.println("middleNumber: "+ middleNumber);
         // assetNo 생성
-        String assetNoString = "BNO_" + middleNumber + "_" + assetTypeCode;
-
+        String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString를 assetInfo의 assetNo에 저장
         assetInfo.setAssetNo(assetNoString);
         return assetInfoApi.save(assetInfo);
+    }
+
+    // seq 값 로드
+    public String selectSeq() {
+        System.out.println(">>>>> selectSeq() 메소드 실행. id 값 취득 <<<<<");
+        String seqNum = assetInfoApi.selectSeq();
+        System.out.println("   생성된 id값: " + seqNum);
+        return seqNum;
     }
 
     // LIST

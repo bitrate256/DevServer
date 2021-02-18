@@ -2,6 +2,7 @@ package bno.asset.routers;
 
 import bno.asset.core.AssetInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +21,7 @@ public interface AssetInfoApi extends JpaRepository<AssetInfo, String> {
     // Optional 삭제
     // Optional<AssetInfo> findByAssetNo(int assetNo);
     // Optional<AssetInfo> deleteByAssetNo(int assetNo);
-    AssetInfo findById(Long id);
+
+    @Query(value="select lpad(nextval(ASSET_SEQ), 4, 0)", nativeQuery = true)
+    String selectSeq();
 }

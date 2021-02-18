@@ -9,6 +9,8 @@ public interface AssetInfoService {
 
     // CREATE
     AssetInfo save(AssetInfo assetInfo);
+    String selectSeq() throws Exception;
+
     // AssetInfo findById(Long id);
 
     // LIST

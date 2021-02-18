@@ -1,7 +1,6 @@
 package bno.asset.core;
 
 import lombok.*;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,10 +17,6 @@ public class AssetInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    // assetNo -> 실제 사용자가 확인할 일련번호
-    // 동시에 검색 기준이기 때문에 Id 이기도 함
     @Column(nullable = false)
     private String assetNo;
     @OneToOne
@@ -43,6 +38,7 @@ public class AssetInfo implements Serializable {
     private String etc;
     @Column(columnDefinition = "date default now()")
     private LocalDateTime regDate;
+
     public AssetInfo() {
 
     }
@@ -50,7 +46,6 @@ public class AssetInfo implements Serializable {
     public AssetInfo(Long id, String assetNo, AssetType assetTypeCode, String userName, String assetModelName,
                      String assetSerialNo, LocalDateTime useStartDate, String assetStat,
                      String assetPjtLoc, String etc) {
-        this.id = id;
         this.assetNo = assetNo;
         this.assetTypeCode = assetTypeCode;
         this.userName = userName;
@@ -62,11 +57,4 @@ public class AssetInfo implements Serializable {
         this.etc = etc;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
