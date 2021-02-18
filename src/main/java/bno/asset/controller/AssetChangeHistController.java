@@ -19,14 +19,14 @@ public class AssetChangeHistController {
 
     // CREATE
     // 자산 변경 이력 등록
-    @PostMapping()
+    @PostMapping("/asset/{assetNo}/assetChangeHist/create")
     public ResponseEntity<AssetChangeHist> create(@RequestBody AssetChangeHist assetChangeHist) {
         return new ResponseEntity<AssetChangeHist>(assetChangeHistService.register(assetChangeHist), HttpStatus.OK);
     }
 
     // LIST
     // 자산 번경 이력 조회
-    @GetMapping
+    @GetMapping("/asset/{assetNo}/assetChangeHist")
     public ResponseEntity<List<AssetChangeHist>> getAllAssetChangeHist() {
         List<AssetChangeHist> assetChangeHists = assetChangeHistService.retrieveAll();
         return new ResponseEntity<List<AssetChangeHist>>(assetChangeHists, HttpStatus.OK);

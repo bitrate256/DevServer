@@ -33,7 +33,7 @@ public class AssetInfoController {
 
     // CREATE
     // POST 자산 등록
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/asset/create")
     public ResponseEntity<AssetInfo> create(@RequestBody AssetInfo assetInfo) {
         System.out.println("AssetInfo CREATE 값 확인      ========>    "+assetInfo.toString());
         return new ResponseEntity<AssetInfo>(assetInfoService.save(assetInfo), HttpStatus.OK);
@@ -47,21 +47,21 @@ public class AssetInfoController {
         return new ResponseEntity<List<AssetInfo>>(assetInfos, HttpStatus.OK);
     }
     // LIST 페이징
-    @GetMapping(value = "/paging")
+    @GetMapping(value = "/asset/paging")
     public Page<AssetInfo> findAssetByPageRequest(final Pageable pageable) {
         return assetInfoService.findAssetByPageRequest(pageable);
     }
 
     // READ
     // GET 자산 조회
-    @GetMapping(value = "/asset/{assetNo}")
+    @GetMapping(value = "/asset/{assetNo}/detail")
     public ResponseEntity<AssetInfo> getAssetInfo(@PathVariable("assetNo") String assetNo) {
         return new ResponseEntity<AssetInfo>(assetInfoService.findByAssetNo(assetNo),HttpStatus.OK);
     }
 
     // UPDATE
     // PUT 자산 수정
-    @PutMapping(value = "/asset/{assetNo}")
+    @PutMapping(value = "/asset/{assetNo}/detail/update")
     public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("assetNo") String assetNo,
                                                      @RequestBody AssetInfo assetInfo) {
         assetInfoService.updateById(assetNo, assetInfo);
@@ -79,7 +79,7 @@ public class AssetInfoController {
 
     // DELETE
     // 자산 삭제 (요구사항에 없음)
-    @DeleteMapping(value = "/asset/{assetNo}")
+    @DeleteMapping(value = "/asset/{assetNo}/delete")
     public ResponseEntity<Void> deleteAssetInfo(@PathVariable("assetNo") String assetNo) {
         assetInfoService.deleteByAssetNo(assetNo);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

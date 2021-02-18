@@ -22,7 +22,7 @@ public class AssetTypeController {
 
     // CREATE
     // 자산 유형 등록
-    @PostMapping("/createAssetType")
+    @PostMapping("/createAssetType/create")
     public AssetType createAssetType(@RequestBody AssetType assetType) {
         //
         assetTypeService.register(assetType);
@@ -31,7 +31,7 @@ public class AssetTypeController {
 
     // LIST
     // GET 자산 유형 조회
-    @GetMapping()
+    @GetMapping("/createAssetType/list")
     public ResponseEntity<List<AssetType>> getAllAssetType() {
         List<AssetType> assetTypeList = assetTypeService.findAll();
         return new ResponseEntity<List<AssetType>>(assetTypeList, HttpStatus.OK);
