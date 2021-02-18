@@ -11,6 +11,5 @@ import javax.transaction.Transactional;
 @EnableJpaRepositories
 @Transactional
 public interface AssetChangeHistApi extends JpaRepository<AssetChangeHist, String> {
-    //
 
 }

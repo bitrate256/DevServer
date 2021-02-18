@@ -6,6 +6,7 @@ import bno.asset.service.AssetTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 @Service
 public class AssetTypeLogic implements AssetTypeService {
@@ -19,6 +20,11 @@ public class AssetTypeLogic implements AssetTypeService {
 
         assetType.setNo(UUID.randomUUID().toString());
         assetTypeApi.save(assetType);
+    }
+
+    @Override
+    public List<AssetType> findAll() {
+        return assetTypeApi.findAll();
     }
 
     // READ

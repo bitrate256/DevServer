@@ -3,14 +3,11 @@ package bno.asset.service.logic;
 import bno.asset.core.AssetInfo;
 import bno.asset.core.AssetType;
 import bno.asset.routers.AssetTypeApi;
-import bno.asset.util.AssetCodeFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Member;
 import java.util.List;
 
 // 비즈니스 로직을 구현하는 클래스
@@ -38,7 +35,7 @@ public class AssetInfoLogic implements AssetInfoService {
         System.out.println("       getId: "+ id);
         // assetNo 생성
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
-        // 생성한 assetNoString를 assetInfo의 assetNo에 저장
+        // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
         return assetInfoApi.save(assetInfo);
     }

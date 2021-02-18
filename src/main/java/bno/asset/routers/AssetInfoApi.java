@@ -15,12 +15,6 @@ import java.util.Optional;
 @EnableJpaRepositories
 @Transactional
 public interface AssetInfoApi extends JpaRepository<AssetInfo, String> {
-    // Optional<ID Primary key>
-    // T는 엔티티의 타입클래스, ID는 PK값의 타입이다.
-
-    // Optional 삭제
-    // Optional<AssetInfo> findByAssetNo(int assetNo);
-    // Optional<AssetInfo> deleteByAssetNo(int assetNo);
 
     @Query(value="select lpad(nextval(ASSET_SEQ), 4, 0)", nativeQuery = true)
     String selectSeq();
