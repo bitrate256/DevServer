@@ -1,5 +1,6 @@
 package bno.asset.service.logic;
 
+import antlr.StringUtils;
 import bno.asset.core.AssetInfo;
 import bno.asset.core.AssetType;
 import bno.asset.routers.AssetTypeApi;
@@ -7,8 +8,11 @@ import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 // 비즈니스 로직을 구현하는 클래스
 // 서비스 클래스 상속
@@ -53,6 +57,10 @@ public class AssetInfoLogic implements AssetInfoService {
     public List<AssetInfo> findAll() {
         return assetInfoApi.findAll();
     }
+    // LIST 페이징
+    public Page<AssetInfo> findAssetByPageRequest(Pageable pageable) {
+        return assetInfoApi.findAll(pageable);
+    }
 
     // READ
     @Override
@@ -77,6 +85,33 @@ public class AssetInfoLogic implements AssetInfoService {
 
         assetInfoApi.save(assetInfo);
     }
+
+    // UPDATE PATCH 테스트
+//    @Override
+//    public boolean patch(String assetNo, AssetInfo assetInfo) {
+//        Optional<AssetInfo> oAssetInfo = assetInfoApi.findById(assetNo);
+//        if(oAssetInfo.isPresent()) {
+//            AssetInfo assetInfos = oAssetInfo.get();
+//            if(StringUtils.isNotBlank(value.getAssetTypeCode()))
+//                assetInfos.setAssetTypeCode());
+//            if(StringUtils.isNotBlank(value.getUserName()))
+//                assetInfos.setUserName());
+//            if(StringUtils.isNotBlank(value.getAssetModelName()))
+//                assetInfos.setAssetModelName());
+//            if(StringUtils.isNotBlank(value.getAssetSerialNo()))
+//                assetInfos.setAssetSerialNo());
+//            if(StringUtils.isNotBlank(value.getUseStartDate()))
+//                assetInfos.setUseStartDate());
+//            if(StringUtils.isNotBlank(value.getAssetStat()))
+//                assetInfos.setAssetStat());
+//            if(StringUtils.isNotBlank(value.getAssetPjtLoc()))
+//                assetInfos.setAssetPjtLoc());
+//            if(StringUtils.isNotBlank(value.getEtc()))
+//                assetInfos.setEtc());
+//            return 1;
+//        }
+//        return 0;
+//    }
 
     // DELETE
     @Override

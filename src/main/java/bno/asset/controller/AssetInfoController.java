@@ -2,12 +2,20 @@ package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
 import bno.asset.service.AssetInfoService;
+import bno.asset.util.BasicResponse;
+import bno.asset.util.ErrorResponse;
+import bno.asset.util.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -38,6 +46,11 @@ public class AssetInfoController {
         List<AssetInfo> assetInfos = assetInfoService.findAll();
         return new ResponseEntity<List<AssetInfo>>(assetInfos, HttpStatus.OK);
     }
+    // LIST 페이징
+    @GetMapping(value = "/paging")
+    public Page<AssetInfo> findAssetByPageRequest(final Pageable pageable) {
+        return assetInfoService.findAssetByPageRequest(pageable);
+    }
 
     // READ
     // GET 자산 조회
@@ -47,7 +60,7 @@ public class AssetInfoController {
     }
 
     // UPDATE
-    // 자산 수
+    // PUT 자산 수정
     @PutMapping(value = "/asset/{assetNo}")
     public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("assetNo") String assetNo,
                                                      @RequestBody AssetInfo assetInfo) {
@@ -55,7 +68,17 @@ public class AssetInfoController {
         return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
     }
 
-    // DELETE정
+    // PATCH 수정 로직 테스트
+//    public ResponseEntity<? extends BasicResponse> patch(@PathVariable("assetNo") String assetNo,
+//                                                                 @RequestBody AssetInfo assetInfo) {
+//        if(!assetInfoService.patch(assetNo, assetInfo)) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("일치하는 정보 없음."));
+//        }
+//        return ResponseEntity.noContent().build();
+//    }
+
+    // DELETE
+    // 자산 삭제 (요구사항에 없음)
     @DeleteMapping(value = "/asset/{assetNo}")
     public ResponseEntity<Void> deleteAssetInfo(@PathVariable("assetNo") String assetNo) {
         assetInfoService.deleteByAssetNo(assetNo);
