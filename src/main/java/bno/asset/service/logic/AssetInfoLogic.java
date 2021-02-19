@@ -31,16 +31,18 @@ public class AssetInfoLogic implements AssetInfoService {
 
         // id값 활용한 일련번호 생성 로직
         // 타입코드 받아옴
-        String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
-        AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
-        System.out.println("   assetType: "+ assetType);
+        String assetTypeCode = assetInfo.getAssetTypeCodeData().getAssetTypeCode();
+        System.out.println("assetTypeCode: "+ assetTypeCode);
+//        AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
+//        System.out.println("   assetType: "+ assetType);
         // seq 값 로드 메소드로부터 id값 취득
         String id = this.selectSeq();
-        System.out.println("       getId: "+ id);
+        System.out.println("        getId: "+ id);
         // assetNo 생성
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
+        assetInfo.setAssetTypeCode(assetTypeCode);
         return assetInfoApi.save(assetInfo);
     }
 
@@ -48,7 +50,7 @@ public class AssetInfoLogic implements AssetInfoService {
     public String selectSeq() {
         System.out.println(">>>>> selectSeq() 메소드 실행. id 값 취득 <<<<<");
         String seqNum = assetInfoApi.selectSeq();
-        System.out.println("   생성된 id값: " + seqNum);
+        System.out.println("   .생성된 id값: " + seqNum);
         return seqNum;
     }
 
@@ -75,6 +77,7 @@ public class AssetInfoLogic implements AssetInfoService {
         AssetInfo a = assetInfoApi.findById(assetNo).orElseThrow(()->
                 new ResourceNotFoundException("","",assetNo));
         a.setAssetTypeCode(assetInfo.getAssetTypeCode());
+//        a.setAssetTypeCodeString(assetInfo.getAssetTypeCodeString());
         a.setUserName(assetInfo.getUserName());
         a.setAssetModelName(assetInfo.getAssetModelName());
         a.setAssetSerialNo(assetInfo.getAssetSerialNo());
@@ -85,33 +88,43 @@ public class AssetInfoLogic implements AssetInfoService {
 
         assetInfoApi.save(assetInfo);
     }
-
-    // UPDATE PATCH 테스트
+    // UPDATE PATCH 로직 테스트
     @Override
-    public int patch(String assetNo, AssetInfo assetInfo) {
-        Optional<AssetInfo> oAssetInfo = assetInfoApi.findById(assetNo);
-        if(oAssetInfo.isPresent()) {
-            AssetInfo assetInfos = oAssetInfo.get();
-//            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetTypeCode()))
-//                assetInfos.setAssetTypeCode(assetInfo.getAssetTypeCode());
-            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getUserName()))
-                assetInfos.setUserName(assetInfo.getUserName());
-            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetModelName()))
-                assetInfos.setAssetModelName(assetInfo.getAssetModelName());
-            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetSerialNo()))
-                assetInfos.setAssetSerialNo(assetInfo.getAssetSerialNo());
-//            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getUseStartDate()))
-//                assetInfos.setUseStartDate(assetInfo.getUseStartDate());
-            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetStat()))
-                assetInfos.setAssetStat(assetInfo.getAssetStat());
-            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetPjtLoc()))
-                assetInfos.setAssetPjtLoc(assetInfo.getAssetPjtLoc());
-            if(StringUtils.isNotBlank(assetInfo.getEtc()))
-                assetInfos.setEtc(assetInfo.getEtc());
-            assetInfoApi.save(assetInfo);
-            return 1;
+    public AssetInfo patchAssetInfo(String assetNo, AssetInfo assetInfo){
+        final Optional<AssetInfo> fetchedAssetInfo = assetInfoApi.findById(assetNo);
+        if(fetchedAssetInfo.isPresent()){
+            if(assetInfo.getAssetNo() != null){
+                fetchedAssetInfo.get().setAssetNo(assetInfo.getAssetNo());
+            }
+            if(assetInfo.getAssetTypeCode() != null){
+                fetchedAssetInfo.get().setAssetTypeCode(assetInfo.getAssetTypeCode());
+            }
+            if(assetInfo.getUserName() != null){
+                fetchedAssetInfo.get().setUserName(assetInfo.getUserName());
+            }
+            if(assetInfo.getAssetModelName() != null){
+                fetchedAssetInfo.get().setAssetModelName(assetInfo.getAssetModelName());
+            }
+            if(assetInfo.getAssetSerialNo() != null){
+                fetchedAssetInfo.get().setAssetSerialNo(assetInfo.getAssetSerialNo());
+            }
+            if(assetInfo.getUseStartDate() != null){
+                fetchedAssetInfo.get().setUseStartDate(assetInfo.getUseStartDate());
+            }
+            if(assetInfo.getAssetStat() != null){
+                fetchedAssetInfo.get().setAssetStat(assetInfo.getAssetStat());
+            }
+            if(assetInfo.getAssetPjtLoc() != null){
+                fetchedAssetInfo.get().setAssetPjtLoc(assetInfo.getAssetPjtLoc());
+            }
+            if(assetInfo.getEtc() != null){
+                fetchedAssetInfo.get().setEtc(assetInfo.getEtc());
+            }
+            return assetInfoApi.save(fetchedAssetInfo.get());
         }
-        return 0;
+        else{
+            return null;
+        }
     }
 
     // DELETE

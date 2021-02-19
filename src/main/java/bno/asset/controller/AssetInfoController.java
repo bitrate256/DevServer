@@ -62,17 +62,17 @@ public class AssetInfoController {
         assetInfoService.updateById(assetNo, assetInfo);
         return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
     }
-
     // PATCH 수정 로직 테스트
     @PatchMapping(value = "/asset/{assetNo}/detail/patch")
-    public ResponseEntity<AssetInfo> patch(@PathVariable("assetNo") String assetNo,
-                                           @RequestBody AssetInfo assetInfo) {
-        assetInfoService.updateById(assetNo, assetInfo);
-        return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
-//        if(!assetInfoService.patch(assetNo, assetInfo)) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("일치하는 정보 없음."));
-//        }
-//        return ResponseEntity.noContent().build();
+    public ResponseEntity<AssetInfo> patchAssetInfo(@PathVariable String assetNo,
+                                          @RequestBody AssetInfo assetInfo) {
+        AssetInfo updateAssetInfo = assetInfoService.patchAssetInfo(assetNo, assetInfo);
+        if(updateAssetInfo != null){	//exist
+            return new ResponseEntity<AssetInfo>(updateAssetInfo, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<AssetInfo>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // DELETE

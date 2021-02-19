@@ -24,9 +24,10 @@ public interface AssetInfoService {
     // UPDATE
     void updateById(String assetNo, AssetInfo assetInfo);
     // UPDATE PATCH 로직 테스트
-    int patch(String assetNo, AssetInfo assetInfo);
+    AssetInfo patchAssetInfo(String assetNo, AssetInfo assetInfo);
 
     // DELETE
     void deleteByAssetNo(String assetNo);
+
 
 }
