@@ -2,9 +2,6 @@ package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
 import bno.asset.service.AssetInfoService;
-import bno.asset.util.BasicResponse;
-import bno.asset.util.ErrorResponse;
-import bno.asset.util.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -69,13 +64,16 @@ public class AssetInfoController {
     }
 
     // PATCH 수정 로직 테스트
-//    public ResponseEntity<? extends BasicResponse> patch(@PathVariable("assetNo") String assetNo,
-//                                                                 @RequestBody AssetInfo assetInfo) {
+    @PatchMapping(value = "/asset/{assetNo}/detail/patch")
+    public ResponseEntity<AssetInfo> patch(@PathVariable("assetNo") String assetNo,
+                                           @RequestBody AssetInfo assetInfo) {
+        assetInfoService.updateById(assetNo, assetInfo);
+        return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
 //        if(!assetInfoService.patch(assetNo, assetInfo)) {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("일치하는 정보 없음."));
 //        }
 //        return ResponseEntity.noContent().build();
-//    }
+    }
 
     // DELETE
     // 자산 삭제 (요구사항에 없음)

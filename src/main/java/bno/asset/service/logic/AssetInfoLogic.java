@@ -1,6 +1,5 @@
 package bno.asset.service.logic;
 
-import antlr.StringUtils;
 import bno.asset.core.AssetInfo;
 import bno.asset.core.AssetType;
 import bno.asset.routers.AssetTypeApi;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 
 // 비즈니스 로직을 구현하는 클래스
 // 서비스 클래스 상속
@@ -87,31 +87,32 @@ public class AssetInfoLogic implements AssetInfoService {
     }
 
     // UPDATE PATCH 테스트
-//    @Override
-//    public boolean patch(String assetNo, AssetInfo assetInfo) {
-//        Optional<AssetInfo> oAssetInfo = assetInfoApi.findById(assetNo);
-//        if(oAssetInfo.isPresent()) {
-//            AssetInfo assetInfos = oAssetInfo.get();
-//            if(StringUtils.isNotBlank(value.getAssetTypeCode()))
-//                assetInfos.setAssetTypeCode());
-//            if(StringUtils.isNotBlank(value.getUserName()))
-//                assetInfos.setUserName());
-//            if(StringUtils.isNotBlank(value.getAssetModelName()))
-//                assetInfos.setAssetModelName());
-//            if(StringUtils.isNotBlank(value.getAssetSerialNo()))
-//                assetInfos.setAssetSerialNo());
-//            if(StringUtils.isNotBlank(value.getUseStartDate()))
-//                assetInfos.setUseStartDate());
-//            if(StringUtils.isNotBlank(value.getAssetStat()))
-//                assetInfos.setAssetStat());
-//            if(StringUtils.isNotBlank(value.getAssetPjtLoc()))
-//                assetInfos.setAssetPjtLoc());
-//            if(StringUtils.isNotBlank(value.getEtc()))
-//                assetInfos.setEtc());
-//            return 1;
-//        }
-//        return 0;
-//    }
+    @Override
+    public int patch(String assetNo, AssetInfo assetInfo) {
+        Optional<AssetInfo> oAssetInfo = assetInfoApi.findById(assetNo);
+        if(oAssetInfo.isPresent()) {
+            AssetInfo assetInfos = oAssetInfo.get();
+//            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetTypeCode()))
+//                assetInfos.setAssetTypeCode(assetInfo.getAssetTypeCode());
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getUserName()))
+                assetInfos.setUserName(assetInfo.getUserName());
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetModelName()))
+                assetInfos.setAssetModelName(assetInfo.getAssetModelName());
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetSerialNo()))
+                assetInfos.setAssetSerialNo(assetInfo.getAssetSerialNo());
+//            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getUseStartDate()))
+//                assetInfos.setUseStartDate(assetInfo.getUseStartDate());
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetStat()))
+                assetInfos.setAssetStat(assetInfo.getAssetStat());
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(assetInfo.getAssetPjtLoc()))
+                assetInfos.setAssetPjtLoc(assetInfo.getAssetPjtLoc());
+            if(StringUtils.isNotBlank(assetInfo.getEtc()))
+                assetInfos.setEtc(assetInfo.getEtc());
+            assetInfoApi.save(assetInfo);
+            return 1;
+        }
+        return 0;
+    }
 
     // DELETE
     @Override
