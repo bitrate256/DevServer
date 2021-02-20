@@ -20,7 +20,7 @@ public class AssetInfo implements Serializable {
     @Column(nullable = false)
     private String assetNo;
     @OneToOne
-    @JoinColumn(name = "assetTypeCode", nullable = false)
+    @JoinColumn(name = "assetTypeCode", nullable = false, insertable = false, updatable = false)
     private AssetType assetTypeCodeData;
     @Column(nullable = false)
     private String assetTypeCode;
