@@ -1,6 +1,8 @@
 package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
+import bno.asset.routers.AssetInfoApi;
+import bno.asset.service.logic.AssetInfoSpecs;
 import bno.asset.service.AssetInfoService;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +23,8 @@ import java.util.List;
 public class AssetInfoController {
 
     @Autowired
-    private AssetInfoService assetInfoService;
+    private final AssetInfoService assetInfoService;
+
 
     @PostMapping("/")
     public String home() {
@@ -46,7 +49,7 @@ public class AssetInfoController {
 
     // LIST
     // POST 자산 전체목록 조회
-    @PostMapping(value = "/asset")
+    @GetMapping(value = "/asset")
     public ResponseEntity<List<AssetInfo>> getAllasset() {
         List<AssetInfo> assetInfos = assetInfoService.findAll();
         return new ResponseEntity<List<AssetInfo>>(assetInfos, HttpStatus.OK);
@@ -56,15 +59,29 @@ public class AssetInfoController {
     public Page<AssetInfo> findAssetByPageRequest(final Pageable pageable) {
         return assetInfoService.findAssetByPageRequest(pageable);
     }
-    // LIST 조건조회
-    @PostMapping(value = "/asset/search")
-    public ResponseEntity<List<AssetInfo>> findByAssetModelNameLikeAndUserNameLike(
-            @Param("assetModelName") String assetModelName,
-            @Param("userName") String userName) {
-        assetInfoService.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
-
-        return new ResponseEntity<List<AssetInfo>>(HttpStatus.OK);
+    //
+    @GetMapping("/asset/search")
+    public List<AssetInfo> getAssetList(
+            @RequestParam(required = false) String assetModelName,
+            @RequestParam(required = false) String userName){
+        if( assetModelName != null ){
+            return assetInfoService.findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName));
+        } else if ( userName != null ){
+            return assetInfoService.findAllByUserName(AssetInfoSpecs.withUserName(userName));
+        } else {
+            return assetInfoService.findAll();
+        }
     }
+
+    // LIST 조건조회
+//    @PostMapping(value = "/asset/search")
+//    public ResponseEntity<List<AssetInfo>> findByAssetModelNameLikeAndUserNameLike(
+//            @Param("assetModelName") String assetModelName,
+//            @Param("userName") String userName) {
+//        assetInfoService.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
+//
+//        return new ResponseEntity<List<AssetInfo>>(HttpStatus.OK);
+//    }
 
     // READ
     // GET 자산 조회

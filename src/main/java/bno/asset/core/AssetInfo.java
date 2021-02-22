@@ -1,6 +1,8 @@
 package bno.asset.core;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,8 +22,10 @@ public class AssetInfo implements Serializable {
     @OneToOne
     @JoinColumn(name = "assetTypeCode", nullable = false)
     private AssetType assetTypeCode;
+    @ApiModelProperty(value = "userName")
     @Column(nullable = false)
     private String userName;
+    @ApiModelProperty(value = "assetModelName")
     @Column(nullable = false)
     private String assetModelName;
     @Column(unique = true, nullable = false)

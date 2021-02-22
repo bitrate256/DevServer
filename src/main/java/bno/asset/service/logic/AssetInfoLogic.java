@@ -5,6 +5,8 @@ import bno.asset.routers.AssetTypeApi;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,22 +57,42 @@ public class AssetInfoLogic implements AssetInfoService {
     public List<AssetInfo> findAll() {
         return assetInfoApi.findAll();
     }
+
+    @Override
+    public List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName) {
+        return null;
+    }
+
+    @Override
+    public List<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName) {
+        return null;
+    }
+
     // LIST 페이징
     public Page<AssetInfo> findAssetByPageRequest(Pageable pageable) {
         return assetInfoApi.findAll(pageable);
     }
 
-    // spec
+    // LIST  조건검색
 //    @Override
-//    public Page<AssetInfo> findAll(Specification<AssetInfo> spec, Pageable pageable) {
-//        return null;
+//    public List<AssetInfo> findByAssetModelNameLikeAndUserNameLike(String assetModelName, String userName) {
+//        return assetInfoApi.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
 //    }
 
-    // LIST  조건검색
-    @Override
-    public List<AssetInfo> findByAssetModelNameLikeAndUserNameLike(String assetModelName, String userName) {
-        return assetInfoApi.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
-    }
+//    public Specification<AssetInfo> toSpecification() {
+//        Specification<AssetInfo> assetModelName = null;
+//        Specification<AssetInfo> userName = null;
+//
+//        if(this.assetModelName != null && !this.assetModelName.isEmpty()) {
+//            assetModelName = Specification.where((root, query, builder) ->
+//                    builder.like(root.<String>get("assetModelName"),"%"+this.assetModelName+"%"));
+//        }
+//        if(this.userName != null && !this.userName.isEmpty()) {
+//            userName = Specification.where((root, query, builder) ->
+//                    builder.like(root.<String>get("userName"),"%"+this.userName+"%"));
+//        }
+//        return Specification.where(assetModelName).and(userName);
+//    }
 
     // READ
     @Override
