@@ -54,15 +54,7 @@ public class AssetInfoController {
         return new ResponseEntity<AssetInfo>(assetInfoService.findByAssetNo(assetNo),HttpStatus.OK);
     }
 
-    // UPDATE
-    // PUT 자산 수정
-    @PutMapping(value = "/asset/{assetNo}/detail/update")
-    public ResponseEntity<AssetInfo> updateAssetInfo(@PathVariable("assetNo") String assetNo,
-                                                     @RequestBody AssetInfo assetInfo) {
-        assetInfoService.updateById(assetNo, assetInfo);
-        return new ResponseEntity<AssetInfo>(assetInfo, HttpStatus.OK);
-    }
-    // PATCH 수정 로직 테스트
+    // UPDATE (PATCH)
     @PatchMapping(value = "/asset/{assetNo}/detail/patch")
     public ResponseEntity<AssetInfo> patchAssetInfo(@PathVariable String assetNo,
                                           @RequestBody AssetInfo assetInfo) {

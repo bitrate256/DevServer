@@ -22,8 +22,6 @@ public interface AssetInfoService {
     AssetInfo findByAssetNo(String assetNo);
 
     // UPDATE
-    void updateById(String assetNo, AssetInfo assetInfo);
-    // UPDATE PATCH 로직 테스트
     AssetInfo patchAssetInfo(String assetNo, AssetInfo assetInfo);
 
     // DELETE

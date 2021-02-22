@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "AssetInfo")
 @Data
-// @AllArgsConstructor
-// @NoArgsConstructor
 public class AssetInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,8 +20,6 @@ public class AssetInfo implements Serializable {
     @OneToOne
     @JoinColumn(name = "assetTypeCode", nullable = false)
     private AssetType assetTypeCode;
-//    @Column(nullable = false)
-//    private String assetTypeCode;
     @Column(nullable = false)
     private String userName;
     @Column(nullable = false)
@@ -46,14 +42,11 @@ public class AssetInfo implements Serializable {
     }
 
     public AssetInfo(String assetNo,
-//                     AssetType assetTypeCodeData,
-//                     String assetTypeCode,
                      AssetType assetTypeCode,
                      String userName, String assetModelName,
                      String assetSerialNo, LocalDateTime useStartDate, String assetStat,
                      String assetPjtLoc, String etc) {
         this.assetNo = assetNo;
-//        this.assetTypeCodeData = assetTypeCodeData;
         this.assetTypeCode = assetTypeCode;
         this.userName = userName;
         this.assetModelName = assetModelName;
@@ -71,23 +64,6 @@ public class AssetInfo implements Serializable {
     public void setAssetNo(String assetNo) {
         this.assetNo = assetNo;
     }
-
-//    public AssetType getAssetTypeCodeData() {
-//        return assetTypeCodeData;
-//    }
-
-//    public void setAssetTypeCodeData(AssetType assetTypeCodeData) {
-//        this.assetTypeCodeData = assetTypeCodeData;
-//    }
-
-//    public String getAssetTypeCode() {
-//        return assetTypeCode;
-//    }
-//
-//    public void setAssetTypeCode(String assetTypeCode) {
-//        this.assetTypeCode = assetTypeCode;
-//    }
-
 
     public AssetType getAssetTypeCode() {
         return assetTypeCode;
