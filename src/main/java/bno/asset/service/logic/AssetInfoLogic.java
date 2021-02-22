@@ -8,6 +8,7 @@ import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,18 @@ public class AssetInfoLogic implements AssetInfoService {
     // LIST 페이징
     public Page<AssetInfo> findAssetByPageRequest(Pageable pageable) {
         return assetInfoApi.findAll(pageable);
+    }
+
+    // spec
+//    @Override
+//    public Page<AssetInfo> findAll(Specification<AssetInfo> spec, Pageable pageable) {
+//        return null;
+//    }
+
+    // LIST  조건검색
+    @Override
+    public List<AssetInfo> findByAssetModelNameLikeAndUserNameLike(String assetModelName, String userName) {
+        return assetInfoApi.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
     }
 
     // READ
@@ -110,5 +123,6 @@ public class AssetInfoLogic implements AssetInfoService {
     public void deleteByAssetNo(String assetNo) {
         assetInfoApi.deleteById(assetNo);
     }
+
 
 }

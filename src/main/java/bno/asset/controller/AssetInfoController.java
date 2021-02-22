@@ -2,10 +2,12 @@ package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
 import bno.asset.service.AssetInfoService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +36,16 @@ public class AssetInfoController {
         return new ResponseEntity<AssetInfo>(assetInfoService.save(assetInfo), HttpStatus.OK);
     }
 
+    // READ ( 모델명 assetModelName / 사용자 userName )
+//    @GetMapping(value = "/search")
+//    public List<AssetInfo> getAssetSearch(@RequestParam(required = false) String assetModelName,
+//                                          @RequestParam(required = false) String userName) {
+//        Specification<AssetInfo>spec=Specifications.where(AssetInfoSpecs.assetModelNameLike(query));
+//
+//    }
+
     // LIST
-    // POST 자산 목록 조회
+    // POST 자산 전체목록 조회
     @PostMapping(value = "/asset")
     public ResponseEntity<List<AssetInfo>> getAllasset() {
         List<AssetInfo> assetInfos = assetInfoService.findAll();
@@ -45,6 +55,15 @@ public class AssetInfoController {
     @GetMapping(value = "/asset/paging")
     public Page<AssetInfo> findAssetByPageRequest(final Pageable pageable) {
         return assetInfoService.findAssetByPageRequest(pageable);
+    }
+    // LIST 조건조회
+    @PostMapping(value = "/asset/search")
+    public ResponseEntity<List<AssetInfo>> findByAssetModelNameLikeAndUserNameLike(
+            @Param("assetModelName") String assetModelName,
+            @Param("userName") String userName) {
+        assetInfoService.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
+
+        return new ResponseEntity<List<AssetInfo>>(HttpStatus.OK);
     }
 
     // READ

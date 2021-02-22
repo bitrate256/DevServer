@@ -12,4 +12,5 @@ public interface AssetChangeHistService {
     AssetChangeHist register(AssetChangeHist assetChangeHist);
 
     List<AssetChangeHist> retrieveAll();
+
 }

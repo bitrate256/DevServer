@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,9 +28,15 @@ public class AssetTypeController {
 
     // LIST
     // GET 자산 유형 조회
-    @GetMapping("/createAssetType/list")
+    @GetMapping("/assetType/list")
     public ResponseEntity<List<AssetType>> getAllAssetType() {
         List<AssetType> assetTypeList = assetTypeService.findAll();
         return new ResponseEntity<List<AssetType>>(assetTypeList, HttpStatus.OK);
+    }
+
+    // READ 코드 읽어오기
+    @GetMapping("/assetType/{assetTypeCode}")
+    public ResponseEntity<AssetType> getAssetType(@PathVariable("assetTypeCode") String assetTypeCode) {
+        return new ResponseEntity<AssetType>(assetTypeService.findByAssetTypeCode(assetTypeCode), HttpStatus.OK);
     }
 }
