@@ -31,7 +31,8 @@ public class AssetInfoLogic implements AssetInfoService {
 
         // id값 활용한 일련번호 생성 로직
         // 타입코드 받아옴
-        String assetTypeCode = assetInfo.getAssetTypeCodeData().getAssetTypeCode();
+//        String assetTypeCode = assetInfo.getAssetTypeCodeData().getAssetTypeCode();
+        String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
         System.out.println("assetTypeCode: "+ assetTypeCode);
 //        AssetType assetType = assetTypeApi.findByAssetTypeCode(assetInfo.getAssetTypeCode().getAssetTypeCode());
 //        System.out.println("   assetType: "+ assetType);
@@ -42,7 +43,7 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
-        assetInfo.setAssetTypeCode(assetTypeCode);
+//        assetInfo.setAssetTypeCode(assetTypeCode);
         return assetInfoApi.save(assetInfo);
     }
 

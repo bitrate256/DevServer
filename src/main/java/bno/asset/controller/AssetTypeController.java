@@ -26,7 +26,8 @@ public class AssetTypeController {
     public AssetType createAssetType(@RequestBody AssetType assetType) {
         //
         assetTypeService.register(assetType);
-        return assetTypeService.findByAssetTypeCode(assetType.getNo());
+//        return assetTypeService.findByAssetTypeCode(assetType.getNo());
+        return assetTypeService.findByAssetTypeCode(assetType.getAssetTypeCode());
     }
 
     // LIST

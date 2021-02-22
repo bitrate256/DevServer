@@ -18,7 +18,8 @@ public class AssetTypeLogic implements AssetTypeService {
     @Override
     public void register(AssetType assetType) {
 
-        assetType.setNo(UUID.randomUUID().toString());
+//        assetType.setNo(UUID.randomUUID().toString());
+        assetType.setAssetTypeCode(assetType.getAssetTypeCode());
         assetTypeApi.save(assetType);
     }
 

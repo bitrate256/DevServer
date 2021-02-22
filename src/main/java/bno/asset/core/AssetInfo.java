@@ -20,10 +20,10 @@ public class AssetInfo implements Serializable {
     @Column(nullable = false)
     private String assetNo;
     @OneToOne
-    @JoinColumn(name = "assetTypeCode", nullable = false, insertable = false, updatable = false)
-    private AssetType assetTypeCodeData;
-    @Column(nullable = false)
-    private String assetTypeCode;
+    @JoinColumn(name = "assetTypeCode", nullable = false)
+    private AssetType assetTypeCode;
+//    @Column(nullable = false)
+//    private String assetTypeCode;
     @Column(nullable = false)
     private String userName;
     @Column(nullable = false)
@@ -46,13 +46,14 @@ public class AssetInfo implements Serializable {
     }
 
     public AssetInfo(String assetNo,
-                     AssetType assetTypeCodeData,
-                     String assetTypeCode,
+//                     AssetType assetTypeCodeData,
+//                     String assetTypeCode,
+                     AssetType assetTypeCode,
                      String userName, String assetModelName,
                      String assetSerialNo, LocalDateTime useStartDate, String assetStat,
                      String assetPjtLoc, String etc) {
         this.assetNo = assetNo;
-        this.assetTypeCodeData = assetTypeCodeData;
+//        this.assetTypeCodeData = assetTypeCodeData;
         this.assetTypeCode = assetTypeCode;
         this.userName = userName;
         this.assetModelName = assetModelName;
@@ -71,19 +72,28 @@ public class AssetInfo implements Serializable {
         this.assetNo = assetNo;
     }
 
-    public AssetType getAssetTypeCodeData() {
-        return assetTypeCodeData;
-    }
+//    public AssetType getAssetTypeCodeData() {
+//        return assetTypeCodeData;
+//    }
 
 //    public void setAssetTypeCodeData(AssetType assetTypeCodeData) {
 //        this.assetTypeCodeData = assetTypeCodeData;
 //    }
 
-    public String getAssetTypeCode() {
+//    public String getAssetTypeCode() {
+//        return assetTypeCode;
+//    }
+//
+//    public void setAssetTypeCode(String assetTypeCode) {
+//        this.assetTypeCode = assetTypeCode;
+//    }
+
+
+    public AssetType getAssetTypeCode() {
         return assetTypeCode;
     }
 
-    public void setAssetTypeCode(String assetTypeCode) {
+    public void setAssetTypeCode(AssetType assetTypeCode) {
         this.assetTypeCode = assetTypeCode;
     }
 

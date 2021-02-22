@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 public class AssetType {
 
     @Id
-    private String no;
-    @Column(unique = true, nullable = false)
+    @Column(name = "assetTypeCode")
     private String assetTypeCode;
     @Column(nullable = false)
     private String assetTypeName;
