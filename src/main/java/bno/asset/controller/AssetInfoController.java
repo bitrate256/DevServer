@@ -23,7 +23,6 @@ public class AssetInfoController {
     @Autowired
     private final AssetInfoService assetInfoService;
 
-
     @PostMapping("/")
     public String home() {
         return "";
