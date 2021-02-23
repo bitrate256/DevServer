@@ -57,6 +57,11 @@ public class AssetInfoLogic implements AssetInfoService {
     public List<AssetInfo> findAll() {
         return assetInfoApi.findAll();
     }
+    // LIST 조건검색 (자산유형)
+    @Override
+    public List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCode) {
+        return assetInfoApi.findAll(Specification.where(withAssetTypeCode));
+    }
     // LIST 조건검색 (모델명)
     @Override
     public List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName) {

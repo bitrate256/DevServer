@@ -16,6 +16,8 @@ public interface AssetInfoService {
 
     // LIST
     List<AssetInfo> findAll();
+    // LIST 조건검색 (자산유형)
+    List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCode);
     // LIST 조건검색 (모델명)
     List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName);
     // LIST 조건검색 (사용자명)

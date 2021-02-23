@@ -47,9 +47,12 @@ public class AssetInfoController {
     // GET 조건조회 (모델명/사용자명)
     @GetMapping("/asset/search")
     public List<AssetInfo> getAssetList(
+            @RequestParam(required = false) String assetTypeCode,
             @RequestParam(required = false) String assetModelName,
             @RequestParam(required = false) String userName){
-        if( assetModelName != null ){
+        if( assetTypeCode != null ){
+            return assetInfoService.findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetTypeCode));
+        } else if( assetModelName != null ){
             return assetInfoService.findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName));
         } else if ( userName != null ){
             return assetInfoService.findAllByUserName(AssetInfoSpecs.withUserName(userName));
