@@ -23,6 +23,7 @@ public class AssetTypeLogic implements AssetTypeService {
         assetTypeApi.save(assetType);
     }
 
+    // LIST
     @Override
     public List<AssetType> findAll() {
         return assetTypeApi.findAll();

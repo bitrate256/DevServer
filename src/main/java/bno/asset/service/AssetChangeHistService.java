@@ -11,6 +11,7 @@ public interface AssetChangeHistService {
     // CREATE
     AssetChangeHist register(AssetChangeHist assetChangeHist);
 
+    // 이력 전체 리스트
     List<AssetChangeHist> retrieveAll();
 
 }

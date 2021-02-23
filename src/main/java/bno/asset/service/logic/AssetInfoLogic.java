@@ -57,42 +57,20 @@ public class AssetInfoLogic implements AssetInfoService {
     public List<AssetInfo> findAll() {
         return assetInfoApi.findAll();
     }
-
+    // LIST 조건검색 (모델명)
     @Override
     public List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName) {
-        return null;
+        return assetInfoApi.findAll(Specification.where(withAssetModelName));
     }
-
+    // LIST 조건검색 (사용자명)
     @Override
     public List<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName) {
-        return null;
+        return assetInfoApi.findAll(Specification.where(withUserName));
     }
-
     // LIST 페이징
     public Page<AssetInfo> findAssetByPageRequest(Pageable pageable) {
         return assetInfoApi.findAll(pageable);
     }
-
-    // LIST  조건검색
-//    @Override
-//    public List<AssetInfo> findByAssetModelNameLikeAndUserNameLike(String assetModelName, String userName) {
-//        return assetInfoApi.findByAssetModelNameLikeAndUserNameLike(assetModelName, userName);
-//    }
-
-//    public Specification<AssetInfo> toSpecification() {
-//        Specification<AssetInfo> assetModelName = null;
-//        Specification<AssetInfo> userName = null;
-//
-//        if(this.assetModelName != null && !this.assetModelName.isEmpty()) {
-//            assetModelName = Specification.where((root, query, builder) ->
-//                    builder.like(root.<String>get("assetModelName"),"%"+this.assetModelName+"%"));
-//        }
-//        if(this.userName != null && !this.userName.isEmpty()) {
-//            userName = Specification.where((root, query, builder) ->
-//                    builder.like(root.<String>get("userName"),"%"+this.userName+"%"));
-//        }
-//        return Specification.where(assetModelName).and(userName);
-//    }
 
     // READ
     @Override

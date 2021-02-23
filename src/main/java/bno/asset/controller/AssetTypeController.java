@@ -19,7 +19,7 @@ public class AssetTypeController {
 
     // CREATE
     // 자산 유형 등록
-    @PostMapping("/createAssetType/create")
+    @PostMapping("/assetType/create")
     public AssetType createAssetType(@RequestBody AssetType assetType) {
         //
         assetTypeService.register(assetType);

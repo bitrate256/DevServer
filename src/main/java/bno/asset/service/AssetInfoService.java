@@ -1,8 +1,6 @@
 package bno.asset.service;
 
 import bno.asset.core.AssetInfo;
-import bno.asset.routers.AssetInfoApi;
-import bno.asset.service.logic.AssetInfoLogic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,13 +16,13 @@ public interface AssetInfoService {
 
     // LIST
     List<AssetInfo> findAll();
+    // LIST 조건검색 (모델명)
     List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName);
+    // LIST 조건검색 (사용자명)
     List<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName);
 
     // LIST 페이징
     Page<AssetInfo> findAssetByPageRequest(Pageable pageable);
-//    Page<AssetInfo> findAll(Specification<AssetInfo>spec,Pageable pageable);
-//    Specification<AssetInfo> findAll(AssetInfo.toSpecification());
 
     // READ
     AssetInfo findByAssetNo(String assetNo);
@@ -35,6 +33,5 @@ public interface AssetInfoService {
     // DELETE
     void deleteByAssetNo(String assetNo);
 
-//    List<AssetInfo> findByAssetModelNameLikeAndUserNameLike(String assetModelName, String userName);
     // YYYY-MM-DD
 }
