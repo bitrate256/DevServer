@@ -2,7 +2,6 @@ package bno.asset.core;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,6 +39,9 @@ public class AssetInfo implements Serializable {
     private String etc;
     @Column(columnDefinition = "date default now()")
     private LocalDateTime regDate;
+    // 코드검색 콤보박스용 컬럼 / UI에 미출력
+    @Column(nullable = true)
+    private String assetTypeCodeSearch;
 
     public AssetInfo() {
 
@@ -49,7 +51,8 @@ public class AssetInfo implements Serializable {
                      AssetType assetTypeCode,
                      String userName, String assetModelName,
                      String assetSerialNo, LocalDateTime useStartDate, String assetStat,
-                     String assetPjtLoc, String etc) {
+                     String assetPjtLoc, String etc,
+                     String assetTypeCodeSearch) {
         this.assetNo = assetNo;
         this.assetTypeCode = assetTypeCode;
         this.userName = userName;
@@ -59,6 +62,7 @@ public class AssetInfo implements Serializable {
         this.assetStat = assetStat;
         this.assetPjtLoc = assetPjtLoc;
         this.etc = etc;
+        this.assetTypeCodeSearch = assetTypeCodeSearch;
     }
 
     public String getAssetNo() {
@@ -131,5 +135,13 @@ public class AssetInfo implements Serializable {
 
     public void setEtc(String etc) {
         this.etc = etc;
+    }
+
+    public String getAssetTypeCodeSearch() {
+        return assetTypeCodeSearch;
+    }
+
+    public void setAssetTypeCodeSearch(String assetTypeCodeSearch) {
+        this.assetTypeCodeSearch = assetTypeCodeSearch;
     }
 }

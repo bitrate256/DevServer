@@ -26,8 +26,4 @@ public class AssetChangeHistLogic implements AssetChangeHistService {
         return null;
     }
 
-    // UPDATE
-
-    // DELETE
-
 }

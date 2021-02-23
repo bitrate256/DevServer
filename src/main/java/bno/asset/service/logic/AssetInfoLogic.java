@@ -5,8 +5,6 @@ import bno.asset.routers.AssetTypeApi;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +39,8 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
+        // 코드검색 콤보박스용 컬럼에 코드값 저장
+        assetInfo.setAssetTypeCodeSearch(assetTypeCode);
         return assetInfoApi.save(assetInfo);
     }
 
@@ -59,8 +59,8 @@ public class AssetInfoLogic implements AssetInfoService {
     }
     // LIST 조건검색 (자산유형)
     @Override
-    public List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCode) {
-        return assetInfoApi.findAll(Specification.where(withAssetTypeCode));
+    public List<AssetInfo> findAllByAssetTypeCodeSearch(Specification<AssetInfo> withAssetTypeCodeSearch) {
+        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch));
     }
     // LIST 조건검색 (모델명)
     @Override
