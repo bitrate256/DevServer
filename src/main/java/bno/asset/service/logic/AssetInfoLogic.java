@@ -30,7 +30,7 @@ public class AssetInfoLogic implements AssetInfoService {
 
         // id값 활용한 일련번호 생성 로직
         // 타입코드 받아옴
-        String assetTypeCode = assetInfo.getAssetTypeCode().getAssetTypeCode();
+        String assetTypeCode = assetInfo.getAssetType().getAssetTypeCode();
         System.out.println("assetTypeCode: "+ assetTypeCode);
         // seq 값 로드 메소드로부터 id값 취득
         String id = this.selectSeq();
@@ -40,7 +40,7 @@ public class AssetInfoLogic implements AssetInfoService {
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
         // 코드검색 콤보박스용 컬럼에 코드값 저장
-        assetInfo.setAssetTypeCodeSearch(assetTypeCode);
+//        assetInfo.setAssetTypeCodeSearch(assetTypeCode);
         return assetInfoApi.save(assetInfo);
     }
 
@@ -59,7 +59,7 @@ public class AssetInfoLogic implements AssetInfoService {
     }
     // LIST 조건검색 (자산유형)
     @Override
-    public List<AssetInfo> findAllByAssetTypeCodeSearch(Specification<AssetInfo> withAssetTypeCodeSearch) {
+    public List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch) {
         return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch));
     }
     // LIST 조건검색 (모델명)
@@ -92,8 +92,8 @@ public class AssetInfoLogic implements AssetInfoService {
             if(assetInfo.getAssetNo() != null){
                 fetchedAssetInfo.get().setAssetNo(assetInfo.getAssetNo());
             }
-            if(assetInfo.getAssetTypeCode() != null){
-                fetchedAssetInfo.get().setAssetTypeCode(assetInfo.getAssetTypeCode());
+            if(assetInfo.getAssetType() != null){
+                fetchedAssetInfo.get().setAssetType(assetInfo.getAssetType());
             }
             if(assetInfo.getUserName() != null){
                 fetchedAssetInfo.get().setUserName(assetInfo.getUserName());

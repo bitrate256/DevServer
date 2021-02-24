@@ -1,6 +1,7 @@
 package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
+import bno.asset.core.AssetType;
 import bno.asset.service.logic.AssetInfoSpecs;
 import bno.asset.service.AssetInfoService;
 
@@ -47,11 +48,12 @@ public class AssetInfoController {
     @GetMapping("/asset/search")
     public List<AssetInfo> getAssetList(
             // 코드검색 콤보박스용 컬럼
-            @RequestParam(required = false) String assetTypeCodeSearch,
+            @RequestParam(required = false) AssetType assetType,
             @RequestParam(required = false) String assetModelName,
             @RequestParam(required = false) String userName){
-        if( assetTypeCodeSearch != null ){
-            return assetInfoService.findAllByAssetTypeCodeSearch(AssetInfoSpecs.withAssetTypeCodeSearch(assetTypeCodeSearch));
+        if( assetType != null ){
+            System.out.print("AssetInfoController List<AssetInfo> getAssetList assetType :" + assetType);
+            return assetInfoService.findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType));
         } else if( assetModelName != null ){
             return assetInfoService.findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName));
         } else if ( userName != null ){

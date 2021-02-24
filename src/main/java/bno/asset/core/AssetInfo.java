@@ -18,9 +18,10 @@ public class AssetInfo implements Serializable {
     @Id
     @Column(nullable = false)
     private String assetNo;
-    @OneToOne
+    // 피드백 수정 백업
+    @ManyToOne
     @JoinColumn(name = "assetTypeCode", nullable = false)
-    private AssetType assetTypeCode;
+    private AssetType assetType;
     @ApiModelProperty(value = "userName")
     @Column(nullable = false)
     private String userName;
@@ -39,22 +40,18 @@ public class AssetInfo implements Serializable {
     private String etc;
     @Column(columnDefinition = "date default now()")
     private LocalDateTime regDate;
-    // 코드검색 콤보박스용 컬럼 / UI에 미출력
-    @Column(nullable = true)
-    private String assetTypeCodeSearch;
 
     public AssetInfo() {
 
     }
 
     public AssetInfo(String assetNo,
-                     AssetType assetTypeCode,
+                     AssetType assetType,
                      String userName, String assetModelName,
                      String assetSerialNo, LocalDateTime useStartDate, String assetStat,
-                     String assetPjtLoc, String etc,
-                     String assetTypeCodeSearch) {
+                     String assetPjtLoc, String etc) {
         this.assetNo = assetNo;
-        this.assetTypeCode = assetTypeCode;
+        this.assetType = assetType;
         this.userName = userName;
         this.assetModelName = assetModelName;
         this.assetSerialNo = assetSerialNo;
@@ -62,7 +59,6 @@ public class AssetInfo implements Serializable {
         this.assetStat = assetStat;
         this.assetPjtLoc = assetPjtLoc;
         this.etc = etc;
-        this.assetTypeCodeSearch = assetTypeCodeSearch;
     }
 
     public String getAssetNo() {
@@ -73,12 +69,12 @@ public class AssetInfo implements Serializable {
         this.assetNo = assetNo;
     }
 
-    public AssetType getAssetTypeCode() {
-        return assetTypeCode;
+    public AssetType getAssetType() {
+        return assetType;
     }
 
-    public void setAssetTypeCode(AssetType assetTypeCode) {
-        this.assetTypeCode = assetTypeCode;
+    public void setAssetType(AssetType assetType) {
+        this.assetType = assetType;
     }
 
     public String getUserName() {
@@ -135,13 +131,5 @@ public class AssetInfo implements Serializable {
 
     public void setEtc(String etc) {
         this.etc = etc;
-    }
-
-    public String getAssetTypeCodeSearch() {
-        return assetTypeCodeSearch;
-    }
-
-    public void setAssetTypeCodeSearch(String assetTypeCodeSearch) {
-        this.assetTypeCodeSearch = assetTypeCodeSearch;
     }
 }
