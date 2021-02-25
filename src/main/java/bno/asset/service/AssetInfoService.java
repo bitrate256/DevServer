@@ -17,17 +17,17 @@ public interface AssetInfoService {
     String selectSeq() throws Exception;
 
     // LIST
-    List<AssetInfo> findAll();
-//    Page<AssetInfo> findAll(Pageable pageable, Integer totalElements);
+//    List<AssetInfo> findAll();
+    Page<AssetInfo> findAll(Pageable pageable);
     // LIST 조건검색 (자산유형)
-    List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch);
-//    Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable, Integer totalElements);
+//    List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch);
+    Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable);
     // LIST 조건검색 (모델명)
-    List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName);
-//    Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName, Pageable pageable, Integer totalElements);
+//    List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName);
+    Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName, Pageable pageable);
     // LIST 조건검색 (사용자명)
-    List<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName);
-//    Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName, Pageable pageable, Integer totalElements);
+//    List<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName);
+    Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName, Pageable pageable);
 
     // LIST 페이징
 //    Pageable pageable = PageRequest.of(1, 10, new Sort(Direction.DESC, ""));

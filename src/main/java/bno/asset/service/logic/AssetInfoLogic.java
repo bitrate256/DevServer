@@ -7,6 +7,7 @@ import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -54,23 +55,23 @@ public class AssetInfoLogic implements AssetInfoService {
 
     // LIST
     @Override
-    public List<AssetInfo> findAll() {
-        return assetInfoApi.findAll();
+    public Page<AssetInfo> findAll(Pageable pageable) {
+        return assetInfoApi.findAll(PageRequest.of(1, 10));
     }
     // LIST 조건검색 (자산유형)
     @Override
-    public List<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch) {
-        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch));
+    public Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable) {
+        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch), PageRequest.of(1, 10));
     }
     // LIST 조건검색 (모델명)
     @Override
-    public List<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName) {
-        return assetInfoApi.findAll(Specification.where(withAssetModelName));
+    public Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName, Pageable pageable) {
+        return assetInfoApi.findAll(Specification.where(withAssetModelName), PageRequest.of(1, 10));
     }
     // LIST 조건검색 (사용자명)
     @Override
-    public List<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName) {
-        return assetInfoApi.findAll(Specification.where(withUserName));
+    public Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName, Pageable pageable) {
+        return assetInfoApi.findAll(Specification.where(withUserName), PageRequest.of(1, 10));
     }
     // LIST 페이징
     public Page<AssetInfo> findAssetByPageRequest(Pageable pageable) {

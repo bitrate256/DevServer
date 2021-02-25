@@ -40,26 +40,29 @@ public class AssetInfoController {
     // LIST
     // GET 자산 전체목록 조회
     @GetMapping(value = "/asset")
-    public ResponseEntity<List<AssetInfo>> getAllasset() {
-        List<AssetInfo> assetInfos = assetInfoService.findAll();
-        return new ResponseEntity<List<AssetInfo>>(assetInfos, HttpStatus.OK);
+    public ResponseEntity<Page<AssetInfo>> getAllasset(Pageable pageable) {
+        Page<AssetInfo> assetInfos = assetInfoService.findAll(pageable);
+        return new ResponseEntity<Page<AssetInfo>>(assetInfos, HttpStatus.OK);
     }
     // GET 조건조회 (모델명/사용자명)
-    @GetMapping("/asset/search")
-    public List<AssetInfo> getAssetList(
+    @PostMapping("/asset/search")
+//    public List<AssetInfo> getAssetList(
+    public Page<AssetInfo> getAssetList(
             // 코드검색 콤보박스용 컬럼
-            @RequestParam(required = false) AssetType assetType,
+            @RequestBody(required = false) AssetType assetType,
             @RequestParam(required = false) String assetModelName,
-            @RequestParam(required = false) String userName){
+            @RequestParam(required = false) String userName, final Pageable pageable){
         if( assetType != null ){
-            System.out.print("AssetInfoController List<AssetInfo> getAssetList assetType :" + assetType);
-            return assetInfoService.findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType));
+            System.out.print("AssetInfoController findAllByAssetTypeCode :" + assetType + "   ->    ");
+            return assetInfoService.findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType), pageable);
         } else if( assetModelName != null ){
-            return assetInfoService.findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName));
+            System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
+            return assetInfoService.findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName), pageable);
         } else if ( userName != null ){
-            return assetInfoService.findAllByUserName(AssetInfoSpecs.withUserName(userName));
+            System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
+            return assetInfoService.findAllByUserName(AssetInfoSpecs.withUserName(userName), pageable);
         } else {
-            return assetInfoService.findAll();
+            return assetInfoService.findAll(pageable);
         }
     }
     // GET 페이징
