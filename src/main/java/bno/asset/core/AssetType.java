@@ -1,5 +1,6 @@
 package bno.asset.core;
 
+import bno.asset.util.DateFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ public class AssetType {
     @Column(nullable = false)
     private String assetTypeName;
     @Column(columnDefinition = "date default now()")
-    private LocalDateTime regDate;
+    private String regDate;
 
     public AssetType() {
 
@@ -28,5 +29,6 @@ public class AssetType {
     public AssetType(String assetTypeCode, String assetTypeName) {
         this.assetTypeCode = assetTypeCode;
         this.assetTypeName = assetTypeName;
+        this.regDate = DateFormat.today();
     }
 }

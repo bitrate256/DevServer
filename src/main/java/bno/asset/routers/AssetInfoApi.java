@@ -1,6 +1,8 @@
 package bno.asset.routers;
 
 import bno.asset.core.AssetInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +23,5 @@ public interface AssetInfoApi extends JpaRepository<AssetInfo, String>,
     // assetNo 번호 생성 위한 시퀀스 사용
     @Query(value="select lpad(nextval(ASSET_SEQ), 4, 0)", nativeQuery = true)
     String selectSeq();
+
 }

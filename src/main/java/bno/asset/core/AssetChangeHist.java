@@ -1,5 +1,6 @@
 package bno.asset.core;
 
+import bno.asset.util.DateFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,10 +19,11 @@ public class AssetChangeHist {
     @JoinColumn(name = "assetNo", nullable = false)
     private AssetInfo assetNo;
     @Column(nullable = false)
-    private LocalDateTime chngDate;
+    private String chngDate;
     private String chngRsn;
 
     public AssetChangeHist() {
-
+        this.chngDate = DateFormat.today();
+        this.chngRsn = DateFormat.today();
     }
 }

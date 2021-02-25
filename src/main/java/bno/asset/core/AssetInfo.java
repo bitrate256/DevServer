@@ -1,5 +1,6 @@
 package bno.asset.core;
 
+import bno.asset.util.DateFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -31,7 +32,7 @@ public class AssetInfo implements Serializable {
     @Column(unique = true, nullable = false)
     private String assetSerialNo;
     @Column(nullable = false)
-    private LocalDateTime useStartDate;
+    private String useStartDate;
     @Column(nullable = false)
     private String assetStat;
     @Column(nullable = false)
@@ -39,7 +40,7 @@ public class AssetInfo implements Serializable {
     @Column(nullable = false)
     private String etc;
     @Column(columnDefinition = "date default now()")
-    private LocalDateTime regDate;
+    private String regDate;
 
     public AssetInfo() {
 
@@ -48,17 +49,18 @@ public class AssetInfo implements Serializable {
     public AssetInfo(String assetNo,
                      AssetType assetType,
                      String userName, String assetModelName,
-                     String assetSerialNo, LocalDateTime useStartDate, String assetStat,
+                     String assetSerialNo, String assetStat,
                      String assetPjtLoc, String etc) {
         this.assetNo = assetNo;
         this.assetType = assetType;
         this.userName = userName;
         this.assetModelName = assetModelName;
         this.assetSerialNo = assetSerialNo;
-        this.useStartDate = useStartDate;
+        this.useStartDate = DateFormat.today();
         this.assetStat = assetStat;
         this.assetPjtLoc = assetPjtLoc;
         this.etc = etc;
+        this.regDate = DateFormat.today();
     }
 
     public String getAssetNo() {
@@ -101,11 +103,11 @@ public class AssetInfo implements Serializable {
         this.assetSerialNo = assetSerialNo;
     }
 
-    public LocalDateTime getUseStartDate() {
+    public String getUseStartDate() {
         return useStartDate;
     }
 
-    public void setUseStartDate(LocalDateTime useStartDate) {
+    public void setUseStartDate(String useStartDate) {
         this.useStartDate = useStartDate;
     }
 

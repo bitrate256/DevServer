@@ -38,7 +38,7 @@ public class AssetInfoController {
     }
 
     // LIST
-    // POST 자산 전체목록 조회
+    // GET 자산 전체목록 조회
     @GetMapping(value = "/asset")
     public ResponseEntity<List<AssetInfo>> getAllasset() {
         List<AssetInfo> assetInfos = assetInfoService.findAll();
