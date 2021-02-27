@@ -36,6 +36,11 @@ dependencies {
 //    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 }
 
+jar {
+//    destinationDir new File("C:/")
+    destinationDir new File("/Users/bit/workspace")
+}
+
 test {
     useJUnitPlatform()
 }
