@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,7 +18,6 @@ public class AssetInfo implements Serializable {
     @Id
     @Column(nullable = false)
     private String assetNo;
-    // 피드백 수정 백업
     @ManyToOne
     @JoinColumn(name = "assetTypeCode", nullable = false)
     private AssetType assetType;

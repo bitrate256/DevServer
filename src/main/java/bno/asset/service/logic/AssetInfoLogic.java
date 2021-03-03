@@ -9,9 +9,7 @@ import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +34,7 @@ public class AssetInfoLogic implements AssetInfoService {
         // 타입코드 받아옴
         String assetTypeCode = assetInfo.getAssetType().getAssetTypeCode();
         System.out.println("assetTypeCode: "+ assetTypeCode);
-        // seq 값 로드 메소드로부터 id값 취득
+        // seq 값 로드 메소드로부터 id값 취득 (49번 라인)
         String id = this.selectSeq();
         System.out.println("        getId: "+ id);
         // assetNo 생성
@@ -45,18 +43,13 @@ public class AssetInfoLogic implements AssetInfoService {
         assetInfo.setAssetNo(assetNoString);
         return assetInfoApi.save(assetInfo);
     }
-
-    // seq 값 로드
+    // seq 값 로드 메소드
     public String selectSeq() {
         System.out.println(">>>>> selectSeq() 메소드 실행. id 값 취득 <<<<<");
         String seqNum = assetInfoApi.selectSeq();
         System.out.println("   .생성된 id값: " + seqNum);
         return seqNum;
     }
-//    @Override
-//    public Page<AssetInfo> findAllJpo(AssetJpo assetType, PageRequest of) {
-//        return null;
-//    }
 
     // LIST
     public Page<AssetInfo> findAllJpo(AssetJpo assetJpo, Pageable pageable) {
@@ -66,37 +59,41 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetModelName = assetJpo.getAssetModelName();
         String userName = assetJpo.getUserName();
 
-        if (assetTypeCode != null) {
+        // findById(assetTypeCode) Null 체크
+        if ( assetTypeCode != null && !"".equals(assetTypeCode)) {
             AssetType assetType = assetTypeApi.findById(assetTypeCode).get();
-
-            if( assetType != null ){
+            // 자산유형
+            if( assetType != null && !"".equals(assetType)){
                 System.out.print("AssetInfoController findAllByAssetTypeCode :" + assetType + "   ->    ");
                 return findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType), pageable);
-            } else if( assetModelName != null ){
+            }
+            // 모델명
+            else if( assetModelName != null && !"".equals(assetModelName)){
                 System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
                 return findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName), pageable);
-            } else if ( userName != null ){
+            }
+            // 사용자명
+            else if ( userName != null && !"".equals(userName)){
                 System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
                 return findAllByUserName(AssetInfoSpecs.withUserName(userName), pageable);
-            } else {
+            }
+            // 전체조회
+            else {
                 return findAll(pageable);
             }
         }
         else {
-            // 낫널
-            System.out.println("if (assetTypeCode != null)");
+            // 전체조회
+            System.out.println("if (assetTypeCode == null)");
             return findAll(pageable);
         }
     }
 
-    // LIST
+    // LIST 전체조회
     @Override
     public Page<AssetInfo> findAll(Pageable pageable) {
         return assetInfoApi.findAll(pageable);
     }
-
-
-
     // LIST 조건검색 (자산유형)
     @Override
     public Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable) {

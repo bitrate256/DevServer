@@ -1,9 +1,12 @@
 package bno.asset.jpo;
 
+// LIST 조건검색 / 페이징을 위한 DTO (엔티티 아님)
 public class AssetJpo {
     private String assetTypeCode;
     private String assetModelName;
     private String userName;
+    private int page;
+    private int pageSize;
 
     public AssetJpo() {
 
@@ -33,12 +36,30 @@ public class AssetJpo {
         this.userName = userName;
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
     @Override
     public String toString() {
         return "AssetJpo{" +
                 "assetTypeCode='" + assetTypeCode + '\'' +
                 ", assetModelName='" + assetModelName + '\'' +
                 ", userName='" + userName + '\'' +
+                ", page=" + page +
+                ", pageSize=" + pageSize +
                 '}';
     }
 }
