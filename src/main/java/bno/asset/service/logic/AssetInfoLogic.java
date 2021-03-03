@@ -1,6 +1,8 @@
 package bno.asset.service.logic;
 
 import bno.asset.core.AssetInfo;
+import bno.asset.core.AssetType;
+import bno.asset.jpo.AssetJpo;
 import bno.asset.routers.AssetTypeApi;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
@@ -8,10 +10,10 @@ import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 import java.util.Optional;
 
 // 비즈니스 로직을 구현하는 클래스
@@ -40,8 +42,6 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
-        // 코드검색 콤보박스용 컬럼에 코드값 저장
-//        assetInfo.setAssetTypeCodeSearch(assetTypeCode);
         return assetInfoApi.save(assetInfo);
     }
 
@@ -55,27 +55,48 @@ public class AssetInfoLogic implements AssetInfoService {
 
     // LIST
     @Override
-    public Page<AssetInfo> findAll(Pageable pageable) {
-        return assetInfoApi.findAll(PageRequest.of(1, 10));
+    public Page<AssetInfo> findAllJpo(AssetJpo assetJpo) {
+
+        System.out.println("AssetJpo ==> "+assetJpo.toString());
+        String assetTypeCode = assetJpo.getAssetTypeCode();
+        String assetModelName = assetJpo.getAssetModelName();
+        String userName = assetJpo.getUserName();
+
+        AssetType assetType = assetTypeApi.findById(assetTypeCode).get();
+
+        if( assetType != null ){
+            System.out.print("AssetInfoController findAllByAssetTypeCode :" + assetType + "   ->    ");
+            return findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType));
+        } else if( assetModelName != null ){
+            System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
+            return findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName));
+        } else if ( userName != null ){
+            System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
+            return findAllByUserName(AssetInfoSpecs.withUserName(userName));
+        } else {
+            return findAll();
+        }
+    }
+
+    // LIST
+    @Override
+    public Page<AssetInfo> findAll() {
+        return assetInfoApi.findAll(PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
     }
     // LIST 조건검색 (자산유형)
     @Override
-    public Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable) {
-        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch), PageRequest.of(1, 10));
+    public Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch) {
+        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch), PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
     }
     // LIST 조건검색 (모델명)
     @Override
-    public Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName, Pageable pageable) {
-        return assetInfoApi.findAll(Specification.where(withAssetModelName), PageRequest.of(1, 10));
+    public Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName) {
+        return assetInfoApi.findAll(Specification.where(withAssetModelName), PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
     }
     // LIST 조건검색 (사용자명)
     @Override
-    public Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName, Pageable pageable) {
-        return assetInfoApi.findAll(Specification.where(withUserName), PageRequest.of(1, 10));
-    }
-    // LIST 페이징
-    public Page<AssetInfo> findAssetByPageRequest(Pageable pageable) {
-        return assetInfoApi.findAll(pageable);
+    public Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName) {
+        return assetInfoApi.findAll(Specification.where(withUserName), PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
     }
 
     // READ
@@ -129,6 +150,5 @@ public class AssetInfoLogic implements AssetInfoService {
     public void deleteByAssetNo(String assetNo) {
         assetInfoApi.deleteById(assetNo);
     }
-
 
 }

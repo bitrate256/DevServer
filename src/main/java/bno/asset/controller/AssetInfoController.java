@@ -1,19 +1,15 @@
 package bno.asset.controller;
 
 import bno.asset.core.AssetInfo;
-import bno.asset.core.AssetType;
-import bno.asset.service.logic.AssetInfoSpecs;
+import bno.asset.jpo.AssetJpo;
 import bno.asset.service.AssetInfoService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -40,35 +36,16 @@ public class AssetInfoController {
     // LIST
     // GET 자산 전체목록 조회
     @GetMapping(value = "/asset")
-    public ResponseEntity<Page<AssetInfo>> getAllasset(Pageable pageable) {
-        Page<AssetInfo> assetInfos = assetInfoService.findAll(pageable);
+    public ResponseEntity<Page<AssetInfo>> getAllasset() {
+        Page<AssetInfo> assetInfos = assetInfoService.findAll();
         return new ResponseEntity<Page<AssetInfo>>(assetInfos, HttpStatus.OK);
     }
     // GET 조건조회 (모델명/사용자명)
     @PostMapping("/asset/search")
-//    public List<AssetInfo> getAssetList(
     public Page<AssetInfo> getAssetList(
             // 코드검색 콤보박스용 컬럼
-            @RequestBody(required = false) AssetType assetType,
-            @RequestParam(required = false) String assetModelName,
-            @RequestParam(required = false) String userName, final Pageable pageable){
-        if( assetType != null ){
-            System.out.print("AssetInfoController findAllByAssetTypeCode :" + assetType + "   ->    ");
-            return assetInfoService.findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType), pageable);
-        } else if( assetModelName != null ){
-            System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
-            return assetInfoService.findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName), pageable);
-        } else if ( userName != null ){
-            System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
-            return assetInfoService.findAllByUserName(AssetInfoSpecs.withUserName(userName), pageable);
-        } else {
-            return assetInfoService.findAll(pageable);
-        }
-    }
-    // GET 페이징
-    @GetMapping(value = "/asset/paging")
-    public Page<AssetInfo> findAssetByPageRequest(final Pageable pageable) {
-        return assetInfoService.findAssetByPageRequest(pageable);
+            @RequestBody(required = false) AssetJpo assetType){
+        return assetInfoService.findAllJpo(assetType);
     }
 
     // READ
