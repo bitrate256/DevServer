@@ -10,6 +10,7 @@ import bno.asset.service.AssetInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -52,51 +53,64 @@ public class AssetInfoLogic implements AssetInfoService {
         System.out.println("   .생성된 id값: " + seqNum);
         return seqNum;
     }
+//    @Override
+//    public Page<AssetInfo> findAllJpo(AssetJpo assetType, PageRequest of) {
+//        return null;
+//    }
 
     // LIST
-    @Override
-    public Page<AssetInfo> findAllJpo(AssetJpo assetJpo) {
+    public Page<AssetInfo> findAllJpo(AssetJpo assetJpo, Pageable pageable) {
 
         System.out.println("AssetJpo ==> "+assetJpo.toString());
         String assetTypeCode = assetJpo.getAssetTypeCode();
         String assetModelName = assetJpo.getAssetModelName();
         String userName = assetJpo.getUserName();
 
-        AssetType assetType = assetTypeApi.findById(assetTypeCode).get();
+        if (assetTypeCode != null) {
+            AssetType assetType = assetTypeApi.findById(assetTypeCode).get();
 
-        if( assetType != null ){
-            System.out.print("AssetInfoController findAllByAssetTypeCode :" + assetType + "   ->    ");
-            return findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType));
-        } else if( assetModelName != null ){
-            System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
-            return findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName));
-        } else if ( userName != null ){
-            System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
-            return findAllByUserName(AssetInfoSpecs.withUserName(userName));
-        } else {
-            return findAll();
+            if( assetType != null ){
+                System.out.print("AssetInfoController findAllByAssetTypeCode :" + assetType + "   ->    ");
+                return findAllByAssetTypeCode(AssetInfoSpecs.withAssetTypeCode(assetType), pageable);
+            } else if( assetModelName != null ){
+                System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
+                return findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName), pageable);
+            } else if ( userName != null ){
+                System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
+                return findAllByUserName(AssetInfoSpecs.withUserName(userName), pageable);
+            } else {
+                return findAll(pageable);
+            }
+        }
+        else {
+            // 낫널
+            System.out.println("if (assetTypeCode != null)");
+            return findAll(pageable);
         }
     }
 
     // LIST
     @Override
-    public Page<AssetInfo> findAll() {
-        return assetInfoApi.findAll(PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
+    public Page<AssetInfo> findAll(Pageable pageable) {
+        return assetInfoApi.findAll(pageable);
     }
+
+
+
     // LIST 조건검색 (자산유형)
     @Override
-    public Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch) {
-        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch), PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
+    public Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable) {
+        return assetInfoApi.findAll(Specification.where(withAssetTypeCodeSearch), pageable);
     }
     // LIST 조건검색 (모델명)
     @Override
-    public Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName) {
-        return assetInfoApi.findAll(Specification.where(withAssetModelName), PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
+    public Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName, Pageable pageable) {
+        return assetInfoApi.findAll(Specification.where(withAssetModelName), pageable);
     }
     // LIST 조건검색 (사용자명)
     @Override
-    public Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName) {
-        return assetInfoApi.findAll(Specification.where(withUserName), PageRequest.of(1, 10, Sort.Direction.DESC, "assetNo"));
+    public Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName, Pageable pageable) {
+        return assetInfoApi.findAll(Specification.where(withUserName), pageable);
     }
 
     // READ

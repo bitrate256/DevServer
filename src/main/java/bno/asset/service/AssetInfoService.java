@@ -3,6 +3,8 @@ package bno.asset.service;
 import bno.asset.core.AssetInfo;
 import bno.asset.jpo.AssetJpo;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 
@@ -12,17 +14,16 @@ public interface AssetInfoService {
     AssetInfo save(AssetInfo assetInfo);
     String selectSeq() throws Exception;
 
-    // JPO DTO
-    Page<AssetInfo> findAllJpo(AssetJpo assetType);
-
     // LIST
-    Page<AssetInfo> findAll();
+    Page<AssetInfo> findAll(Pageable pageable);
+    // JPO DTO
+    Page<AssetInfo> findAllJpo(AssetJpo assetType, Pageable pageable);
     // LIST 조건검색 (자산유형)
-    Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch);
+    Page<AssetInfo> findAllByAssetTypeCode(Specification<AssetInfo> withAssetTypeCodeSearch, Pageable pageable);
     // LIST 조건검색 (모델명)
-    Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName);
+    Page<AssetInfo> findAllByAssetModelName(Specification<AssetInfo> withAssetModelName, Pageable pageable);
     // LIST 조건검색 (사용자명)
-    Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName);
+    Page<AssetInfo> findAllByUserName(Specification<AssetInfo> withUserName, Pageable pageable);
 
     // READ
     AssetInfo findByAssetNo(String assetNo);
@@ -32,5 +33,6 @@ public interface AssetInfoService {
 
     // DELETE
     void deleteByAssetNo(String assetNo);
+
 
 }
