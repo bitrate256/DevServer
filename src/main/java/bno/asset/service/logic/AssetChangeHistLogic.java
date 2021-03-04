@@ -1,5 +1,6 @@
 package bno.asset.service.logic;
 
+import bno.asset.core.AssetInfo;
 import bno.asset.routers.AssetChangeHistApi;
 import bno.asset.core.AssetChangeHist;
 import bno.asset.service.AssetChangeHistService;
@@ -26,4 +27,9 @@ public class AssetChangeHistLogic implements AssetChangeHistService {
         return assetChangeHistApi.findAll();
     }
 
+    // 이력조회시 AssetNo 조회
+    @Override
+    public List<AssetChangeHist> retrieveByAssetNo(AssetInfo assetInfo) {
+        return assetChangeHistApi.findByAssetNo(assetInfo);
+    }
 }

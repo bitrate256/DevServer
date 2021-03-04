@@ -1,6 +1,7 @@
 package bno.asset.controller;
 
 import bno.asset.core.AssetChangeHist;
+import bno.asset.core.AssetInfo;
 import bno.asset.service.AssetChangeHistService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,12 @@ public class AssetChangeHistController {
         return new ResponseEntity<List<AssetChangeHist>>(assetChangeHists, HttpStatus.OK);
     }
 
+    // 이력조회시 AssetNo 조회
+    @PostMapping("/asset/assetChangeHistByAssetNo")
+    public ResponseEntity<List<AssetChangeHist>> postAssetNoAssetChangeHist(@RequestBody AssetInfo assetInfo) {
+
+        System.out.println("assetInfo ===> " + assetInfo);
+        List<AssetChangeHist> assetChangeHists = assetChangeHistService.retrieveByAssetNo(assetInfo);
+        return new ResponseEntity<List<AssetChangeHist>>(assetChangeHists, HttpStatus.OK);
+    }
 }

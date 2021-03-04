@@ -6,8 +6,6 @@ import bno.asset.core.AssetType;
 import bno.asset.jpo.AssetJpo;
 import bno.asset.routers.AssetChangeHistApi;
 import bno.asset.routers.AssetTypeApi;
-import bno.asset.service.AssetChangeHistService;
-import bno.asset.util.DateFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
@@ -17,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 // 비즈니스 로직을 구현하는 클래스
@@ -50,18 +47,14 @@ public class AssetInfoLogic implements AssetInfoService {
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
 
+        // AssetInfo 최종 저장
         AssetInfo saveConfirm =  assetInfoApi.save(assetInfo);
 
+        // AssetChangHist 신규저장 이력 생성
         AssetChangeHist assetChangeHist = new AssetChangeHist();
         assetChangeHist.setAssetNo(saveConfirm);
         assetChangeHist.setChngRsn("신규생성");
-
         assetChangeHistApi.save(assetChangeHist);
-
-//
-//        new AssetChangeHist().setChngDate(DateFormat.today());
-//        new AssetChangeHist().setChngRsn("신규생성");
-//        return assetInfoApi.save(assetInfo);
     }
     // seq 값 로드 메소드
     public String selectSeq() {
@@ -182,19 +175,20 @@ public class AssetInfoLogic implements AssetInfoService {
             if(assetInfo.getEtc() != null){
                 fetchedAssetInfo.get().setEtc(assetInfo.getEtc());
             }
+
+            // AssetChangHist 업데이트 이력 생성
             AssetInfo updateConfirm =  assetInfoApi.save(fetchedAssetInfo.get());
             AssetChangeHist assetChangeHist = new AssetChangeHist();
-
             assetChangeHist.setAssetNo(updateConfirm);
             assetChangeHist.setChngRsn("변경사항 반영 완료");
-
             assetChangeHistApi.save(assetChangeHist);
 
+            // AssetInfo 최종 업데이트
             return assetInfoApi.save(fetchedAssetInfo.get());
-
         }
         else{
-            return null;
+            // 오류 반환
+            throw new RuntimeException();
         }
     }
 
@@ -203,5 +197,4 @@ public class AssetInfoLogic implements AssetInfoService {
     public void deleteByAssetNo(String assetNo) {
         assetInfoApi.deleteById(assetNo);
     }
-
 }

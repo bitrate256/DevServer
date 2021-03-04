@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class AssetChangeHist extends BaseTimeEntity {
+public class AssetChangeHist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
