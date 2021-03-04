@@ -29,9 +29,10 @@ public class AssetInfoController {
     // CREATE
     // POST 자산 등록
     @PostMapping(value = "/asset/create")
-    public ResponseEntity<AssetInfo> create(@RequestBody AssetInfo assetInfo) {
+    public void create(@RequestBody AssetInfo assetInfo) {
         System.out.println("AssetInfo CREATE 값 확인      ========>    "+assetInfo.toString());
-        return new ResponseEntity<AssetInfo>(assetInfoService.save(assetInfo), HttpStatus.OK);
+        assetInfoService.save(assetInfo);
+//        return new ResponseEntity<AssetInfo>(assetInfoService.save(assetInfo), HttpStatus.OK);
     }
 
     // LIST

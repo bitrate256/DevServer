@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 public interface AssetInfoService {
 
     // CREATE
-    AssetInfo save(AssetInfo assetInfo);
+    void save(AssetInfo assetInfo);
     String selectSeq() throws Exception;
 
     // LIST

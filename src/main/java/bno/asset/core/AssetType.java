@@ -18,7 +18,7 @@ public class AssetType {
     private String assetTypeCode;
     @Column(nullable = false)
     private String assetTypeName;
-    @Column(columnDefinition = "date default now()")
+    @Column
     private String regDate;
 
     public AssetType() {

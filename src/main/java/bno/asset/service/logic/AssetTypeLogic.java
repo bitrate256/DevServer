@@ -17,7 +17,6 @@ public class AssetTypeLogic implements AssetTypeService {
     // CREATE
     @Override
     public void register(AssetType assetType) {
-
         assetType.setAssetTypeCode(assetType.getAssetTypeCode());
         assetTypeApi.save(assetType);
     }

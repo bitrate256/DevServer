@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class AssetChangeHist {
+public class AssetChangeHist extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +24,21 @@ public class AssetChangeHist {
     public AssetChangeHist() {
         this.chngDate = DateFormat.today();
         this.chngRsn = DateFormat.today();
+    }
+
+    public String getChngDate() {
+        return chngDate;
+    }
+
+    public void setChngDate(String chngDate) {
+        this.chngDate = chngDate;
+    }
+
+    public String getChngRsn() {
+        return chngRsn;
+    }
+
+    public void setChngRsn(String chngRsn) {
+        this.chngRsn = chngRsn;
     }
 }

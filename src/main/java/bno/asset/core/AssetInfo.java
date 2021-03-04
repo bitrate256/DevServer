@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -37,7 +38,7 @@ public class AssetInfo implements Serializable {
     private String assetPjtLoc;
     @Column(nullable = false)
     private String etc;
-    @Column(columnDefinition = "date default now()")
+    @Column
     private String regDate;
 
     public AssetInfo() {

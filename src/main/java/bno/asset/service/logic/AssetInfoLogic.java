@@ -1,9 +1,13 @@
 package bno.asset.service.logic;
 
+import bno.asset.core.AssetChangeHist;
 import bno.asset.core.AssetInfo;
 import bno.asset.core.AssetType;
 import bno.asset.jpo.AssetJpo;
+import bno.asset.routers.AssetChangeHistApi;
 import bno.asset.routers.AssetTypeApi;
+import bno.asset.service.AssetChangeHistService;
+import bno.asset.util.DateFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 // 비즈니스 로직을 구현하는 클래스
@@ -26,9 +31,12 @@ public class AssetInfoLogic implements AssetInfoService {
     @Autowired
     private AssetTypeApi assetTypeApi;
 
+    @Autowired
+    private AssetChangeHistApi assetChangeHistApi;
+
     // CREATE
     @Override
-    public AssetInfo save(AssetInfo assetInfo) {
+    public void save(AssetInfo assetInfo) {
 
         // id값 활용한 일련번호 생성 로직
         // 타입코드 받아옴
@@ -41,7 +49,19 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
-        return assetInfoApi.save(assetInfo);
+
+        AssetInfo saveConfirm =  assetInfoApi.save(assetInfo);
+
+        AssetChangeHist assetChangeHist = new AssetChangeHist();
+        assetChangeHist.setAssetNo(saveConfirm);
+        assetChangeHist.setChngRsn("신규생성");
+
+        assetChangeHistApi.save(assetChangeHist);
+
+//
+//        new AssetChangeHist().setChngDate(DateFormat.today());
+//        new AssetChangeHist().setChngRsn("신규생성");
+//        return assetInfoApi.save(assetInfo);
     }
     // seq 값 로드 메소드
     public String selectSeq() {
@@ -162,7 +182,16 @@ public class AssetInfoLogic implements AssetInfoService {
             if(assetInfo.getEtc() != null){
                 fetchedAssetInfo.get().setEtc(assetInfo.getEtc());
             }
+            AssetInfo updateConfirm =  assetInfoApi.save(fetchedAssetInfo.get());
+            AssetChangeHist assetChangeHist = new AssetChangeHist();
+
+            assetChangeHist.setAssetNo(updateConfirm);
+            assetChangeHist.setChngRsn("변경사항 반영 완료");
+
+            assetChangeHistApi.save(assetChangeHist);
+
             return assetInfoApi.save(fetchedAssetInfo.get());
+
         }
         else{
             return null;

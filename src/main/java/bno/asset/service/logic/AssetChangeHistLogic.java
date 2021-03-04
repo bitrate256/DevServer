@@ -23,7 +23,7 @@ public class AssetChangeHistLogic implements AssetChangeHistService {
     // LIST
     @Override
     public List<AssetChangeHist> retrieveAll() {
-        return null;
+        return assetChangeHistApi.findAll();
     }
 
 }
