@@ -35,8 +35,8 @@ public class AssetInfoController {
     }
 
     // LIST
-    // POST 자산 전체목록 조회
-    @PostMapping(value = "/asset")
+    // GET 자산 전체목록 조회
+    @GetMapping(value = "/asset")
     public ResponseEntity<Page<AssetInfo>> getAllasset(
             @RequestParam(required = false, value = "page") int page,
             @RequestParam(required = false, value = "pageSize") int pageSize) {
