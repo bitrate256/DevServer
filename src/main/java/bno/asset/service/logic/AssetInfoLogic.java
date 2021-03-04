@@ -59,7 +59,7 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetModelName = assetJpo.getAssetModelName();
         String userName = assetJpo.getUserName();
 
-        // findById(assetTypeCode) Null 체크
+//      findById(assetTypeCode) Null 체크
         if ( assetTypeCode != null && !"".equals(assetTypeCode)) {
             AssetType assetType = assetTypeApi.findById(assetTypeCode).get();
             // 자산유형
@@ -83,9 +83,22 @@ public class AssetInfoLogic implements AssetInfoService {
             }
         }
         else {
-            // 전체조회
+            // 타입코드 NULL 발생시 다시 조건검색 분기처리 진입
             System.out.println("if (assetTypeCode == null)");
-            return findAll(pageable);
+            // 모델명
+            if( assetModelName != null && !"".equals(assetModelName)){
+                System.out.print("AssetInfoController findAllByAssetModelName :" + assetModelName + "   ->    ");
+                return findAllByAssetModelName(AssetInfoSpecs.withAssetModelName(assetModelName), pageable);
+            }
+            // 사용자명
+            else if ( userName != null && !"".equals(userName)){
+                System.out.print("AssetInfoController findAllByUserName :" + userName + "   ->    ");
+                return findAllByUserName(AssetInfoSpecs.withUserName(userName), pageable);
+            }
+            // 전체조회
+            else {
+                return findAll(pageable);
+            }
         }
     }
 
