@@ -6,6 +6,7 @@ import bno.asset.core.AssetType;
 import bno.asset.jpo.AssetJpo;
 import bno.asset.routers.AssetChangeHistApi;
 import bno.asset.routers.AssetTypeApi;
+import bno.asset.util.DateFormat;
 import bno.asset.util.ResourceNotFoundException;
 import bno.asset.routers.AssetInfoApi;
 import bno.asset.service.AssetInfoService;
@@ -46,6 +47,7 @@ public class AssetInfoLogic implements AssetInfoService {
         String assetNoString = "BNO_" + id + "_" + assetTypeCode;
         // 생성한 assetNoString 를 assetInfo 의 assetNo 에 저장
         assetInfo.setAssetNo(assetNoString);
+        assetInfo.setRegDate(DateFormat.today());
 
         // AssetInfo 최종 저장
         AssetInfo saveConfirm =  assetInfoApi.save(assetInfo);
